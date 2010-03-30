@@ -3,7 +3,7 @@
 import re
 class Token(object):
     def __init__(self,type, value=None):
-        self.type=
+        self.type=type
         self.value=value
     def __str__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None

@@ -2,7 +2,7 @@ from lexar import Token
 from bnflexar import BnfLexar
 
 class Grammar(object):
-    """ a grammar is simply a list of rules with at least one start symbole"""
+    """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
         self.rules=[ ]
         self.ruleDict = {}
@@ -12,6 +12,8 @@ class Grammar(object):
         for i in rules:
             print i
     def generate(self, source, verbose=False):
+        pos = 0
+        end = len(stream)
         lex=BnfLexar()
         if verbose:
             lex.setVerbose()
@@ -21,20 +23,27 @@ class Grammar(object):
         stream =lex.tokenStream
         #just for testing
         print stream
-        pos = 0
-        end = len(stream)
         def findbreaks(stack ,i, left):# we need to text this function 
             breaktok =Token("break") 
-            firstbreak = stack[i:].index(breaktok)
+            try:
+                firstbreak = stack[i:].index(breaktok)
+            except ValueError:
+                return i
             newrule =Rule(left)
             newrule.rightHand.extend(stack[i+1:firstbreak])
             newGrammer.rules.append(newrule)
             return findbreaks(stack, firstbreak,left)
+        #base case 
+        newrule=Rule(stream[0])
+        try :
+            firsteq = stream.index(Token("equils"),2)
+        except ValueError:
+            print "somethings up"
 
         while pos!= end:
             stack = []
             #genrule
-            reftok = Token("equils"))# a reference token
+            reftok = Token("equils")# a reference token
             stack.extend(stream[pos:stream.index(reftok)])#remember last element is cut off
             #here stream[pos] is ::=
             print stack
@@ -47,7 +56,7 @@ class Grammar(object):
             else:
                 pos = findbreaks(stack,0,left) #we should prove the base case before we do this 
             pos+=1
-            #another function 
+        #another function 
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         rightHand=(lex1,lex2) #make a tuple
