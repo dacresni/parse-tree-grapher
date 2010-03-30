@@ -23,29 +23,30 @@ class Grammar(object):
         print stream
         pos = 0
         end = len(stream)
-        def findbreaks(stack ,i, left):
-            firstbreak = stack[i:].index(Token("break"))
+        def findbreaks(stack ,i, left):# we need to text this function 
+            breaktok =Token("break") 
+            firstbreak = stack[i:].index(breaktok)
             newrule =Rule(left)
             newrule.rightHand.extend(stack[i+1:firstbreak])
             newGrammer.rules.append(newrule)
             return findbreaks(stack, firstbreak,left)
 
-        while stream[pos]!= end:
+        while pos!= end:
             stack = []
             #genrule
-            while stream[pos].type != "equils":
-                stack.append(stream[pos])
-                pos+=1
+            reftok = Token("equils"))# a reference token
+            stack.extend(stream[pos:stream.index(reftok)])#remember last element is cut off
             #here stream[pos] is ::=
             print stack
             left=stack[0]
-            if(Token("break") in stack):
-                pos = findbreaks(stack,0,left)
-            else:
+            breaktok =Token("break") 
+            if(breaktok in stack):
                 newrule=Rule(left)
                 newrule.rightHand.extend(stack[2:])# ::= is at stack[1]
                 pos +=len(stack)
-            pos-=1
+            else:
+                pos = findbreaks(stack,0,left) #we should prove the base case before we do this 
+            pos+=1
             #another function 
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
