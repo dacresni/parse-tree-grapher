@@ -3,12 +3,14 @@
 import re
 class Token(object):
     def __init__(self,type, value=None):
-        self.type=type
+        self.type=
         self.value=value
     def __str__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
     def __repr__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
+    def __eq__(self, other):
+        return (self.type == other.type and self.value == other.value)
 class Scanner(object):
     """ takes a dictionary of regex:function object pairs
         functions should expect match objects as parameters 
