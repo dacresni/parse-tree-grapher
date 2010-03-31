@@ -12,50 +12,40 @@ class Grammar(object):
         for i in rules:
             print i
     def generate(self, source, verbose=False):
-        pos = 0
-        end = len(stream)
         lex=BnfLexar()
         if verbose:
             lex.setVerbose()
-        #source=open('metabnf','r')
         lex.scanFile(source)
         newGrammer = Grammar()
         stream =lex.tokenStream
-        #just for testing
+        pos = 0
+        end = len(stream)
+       #just for testing
         print stream
         def findbreaks(stack ,i, left):# we need to text this function 
             breaktok =Token("break") 
-            try:
                 firstbreak = stack[i:].index(breaktok)
-            except ValueError:
-                return i
             newrule =Rule(left)
             newrule.rightHand.extend(stack[i+1:firstbreak])
             newGrammer.rules.append(newrule)
-            return findbreaks(stack, firstbreak,left)
+            findbreaks(stack, firstbreak,left)
         #base case 
-        newrule=Rule(stream[0])
-        try :
-            firsteq = stream.index(Token("equils"),2)
-        except ValueError:
-            print "somethings up"
-
         while pos!= end:
             stack = []
+            #here stream[pos+1] is ::=
             #genrule
-            reftok = Token("equils")# a reference token
-            stack.extend(stream[pos:stream.index(reftok)])#remember last element is cut off
-            #here stream[pos] is ::=
+            left=stream[pos] #this should be a left hand rule
+            stop =stream.index( Token("equils"),pos+1) # the last 'equils' after the rule 
+            #which should be the start of the next rule 
+            stack.extend(stream[pos+1:stop])# this time i ommetted the ::= 
             print stack
-            left=stack[0]
-            breaktok =Token("break") 
+            breaktok=Token("break") 
             if(breaktok in stack):
                 newrule=Rule(left)
-                newrule.rightHand.extend(stack[2:])# ::= is at stack[1]
-                pos +=len(stack)
+                newrule.rightHand.extend(stack)# ::= is at stack[1]
             else:
-                pos = findbreaks(stack,0,left) #we should prove the base case before we do this 
-            pos+=1
+                findbreaks(stack,0,left) #we should prove the base case before we do this 
+            pos=stop-1
         #another function 
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
@@ -112,11 +102,13 @@ class Rule(object):
         representation="{%s ::=%s }"%(self.leftHand,right)
         return representation
 
-if __name__=='__main__':
+def test():
    try:
-    source=open('metabnf','r')
+    source=open('g1.txt','r')
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
    bnf.generate(source,True)
    print bnf
+if __name__=='__main__':
+    test()
