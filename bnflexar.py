@@ -44,7 +44,7 @@ if __name__=='__main__' :
     readscann.setVerbose()
     print "end of verbose"
     try:
-        meta = open('metabnf','r')
+        meta = open('g1.txt','r')
     except IOError:
         print 'metabnf not found'
     readscann.scanFile(meta)

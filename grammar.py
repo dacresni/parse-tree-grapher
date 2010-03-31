@@ -89,8 +89,10 @@ class Grammar(object):
         representation = ""
         for rule in self.rules:
             representation+="%s\n"%(rule)
+            
+        
 class Rule(object):
-    # a rule in a grammar has a left hand side of 1 token and a right hand side of a
+    """ a rule in a grammar has a left hand side of 1 token and a right hand side of a """
     def __init__(self, nonterminal ,right=[]):
         self.leftHand=nonterminal # a nonterminal token probibly
         self.rightHand=right 
