@@ -5,47 +5,52 @@ class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
         self.rules=[ ]
-        self.ruleDict = {}
         #self.startSymbole
         #we need to put the start symbole someware
-    def __repr__(self):
-        for i in rules:
-            print i
     def generate(self, source, verbose=False):
+        def __findbreaks( stack ,i, left):# we need to text this function 
+            breaktok =Token("break") 
+            newrule =Rule(left)
+            if breaktok in stack[i:] :
+                firstbreak = stack.index(breaktok,i)
+                newrule.rightHand.extend(stack[i+1:firstbreak])
+                self.rules.append(newrule)
+                findbreaks(stack, firstbreak+1,left)
+                #wehre
+            else:
+                #firstbreak = len(stack) #base case 
+                newrule.rightHand.extend(stack[i+1:])
+                self.rules.append(newrule)
+        
         lex=BnfLexar()
         if verbose:
             lex.setVerbose()
         lex.scanFile(source)
-        newGrammer = Grammar()
         stream =lex.tokenStream
         pos = 0
         end = len(stream)
        #just for testing
-        print stream
-        def findbreaks(stack ,i, left):# we need to text this function 
-            breaktok =Token("break") 
-                firstbreak = stack[i:].index(breaktok)
-            newrule =Rule(left)
-            newrule.rightHand.extend(stack[i+1:firstbreak])
-            newGrammer.rules.append(newrule)
-            findbreaks(stack, firstbreak,left)
-        #base case 
-        while pos!= end:
+        print "stream",stream
+        equiltok = Token("equils")
+        while pos<end:
             stack = []
-            #here stream[pos+1] is ::=
+            #here stream[pos] is ::=
             #genrule
-            left=stream[pos] #this should be a left hand rule
-            stop =stream.index( Token("equils"),pos+1) # the last 'equils' after the rule 
+            left=stream[pos-1] #this should be a left hand rule
+            print " streamSlice=%s;"%stream[pos+1:]
+            if equiltok in stream[pos+1:]:
+                stop = stream.index(equiltok,pos+1)
             #which should be the start of the next rule 
-            stack.extend(stream[pos+1:stop])# this time i ommetted the ::= 
-            print stack
-            breaktok=Token("break") 
-            if(breaktok in stack):
-                newrule=Rule(left)
-                newrule.rightHand.extend(stack)# ::= is at stack[1]
+                stack.extend(stream[pos+1:stop-1])# this time i ommetted the ::= 
+                __findbreaks(stack,0,left)
+                print "pos %i stop %i stack %s "%(pos,stop,stack)
+                pos=stop
             else:
-                findbreaks(stack,0,left) #we should prove the base case before we do this 
-            pos=stop-1
+                stack.extend(stream[pos+1:])
+                __findbreaks(stack,0,left)
+                print "exit pos %i stop %i stack %s "%(pos,stop,stack)
+                print "newgrammar = %s"%self
+                return
         #another function 
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
@@ -56,18 +61,19 @@ class Grammar(object):
             return len(self.rules)
     def bnf2cnf(self):
         for rule in self.rules:
-            __isolateTerminals(rule)
+            self.__isolateTerminals(rule)
         for rule in self.rules:
-            __binaryize(rule)
+            self.__binaryize(rule)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
         for i in range(len(rule.rightHand)):
             token=rule.rightHand[i]
-            if token.value!=None: 
-                newrule=Rule( Token("terminal_%s"%token.value ),Token("terminal","%s"%token.value)  )
+            if token.type==None: 
+                left= Token("terminal_%s"%token.value ) 
+                right=[Token("terminal","%s"%token.value)]
+                rule.rightHand[i]=Token("terminal_%s"%token.value)
                 self.rules.append(newrule)
-                newrule.rightHand.insert(i,Token("terminal_%s"%token.value))
 
     def __binaryize(self,rule):        
         #step 2 make binary
@@ -86,10 +92,9 @@ class Grammar(object):
         """eleminate unit productions """
         pass
     def __str__(self):
-        representation = ""
-        for rule in self.rules:
-            representation+="%s\n"%(rule)
-            
+        return "%s"%self.rules
+    def __repr__(self):
+        print "%s"%self.rules
         
 class Rule(object):
     """ a rule in a grammar has a left hand side of 1 token and a right hand side of a """
@@ -101,7 +106,7 @@ class Rule(object):
         right = ""
         for token in self.rightHand:
             right+="%s"%token
-        representation="{%s ::=%s }"%(self.leftHand,right)
+        representation="{ %s ::=%s }"%(self.leftHand,right)
         return representation
 
 def test():
@@ -110,7 +115,17 @@ def test():
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
+   
    bnf.generate(source,True)
+   print "oldgrammar" 
    print bnf
+   bnf.bnf2cnf()
+   print "new grammer"
+   print bnf
+   final=open("product.txt",'w')
+   product="%s"%bnf.__str__()
+   print "product \n %s"%product
+   final.write(product)
+   final.close()
 if __name__=='__main__':
     test()
