@@ -92,9 +92,15 @@ class Grammar(object):
         """eleminate unit productions """
         pass
     def __str__(self):
-        return "%s"%self.rules
+        rep=[]
+        for i in self.rules:
+            rep.append("%s"%i)
+        return "%s"%rep
     def __repr__(self):
-        print "%s"%self.rules
+        rep=[]
+        for i in self.rules:
+            rep.append("%s"%i)
+        return "%s"%rep
         
 class Rule(object):
     """ a rule in a grammar has a left hand side of 1 token and a right hand side of a """
@@ -103,6 +109,12 @@ class Rule(object):
         self.rightHand=right 
         #perhaps we could shove these into a dict
     def __str__(self):
+        right = ""
+        for token in self.rightHand:
+            right+="%s"%token
+        representation="{ %s ::=%s }"%(self.leftHand,right)
+        return representation
+    def __repr__(self):
         right = ""
         for token in self.rightHand:
             right+="%s"%token
@@ -122,10 +134,7 @@ def test():
    bnf.bnf2cnf()
    print "new grammer"
    print bnf
-   final=open("product.txt",'w')
    product="%s"%bnf.__str__()
    print "product \n %s"%product
-   final.write(product)
-   final.close()
 if __name__=='__main__':
     test()
