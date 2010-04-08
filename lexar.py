@@ -5,6 +5,8 @@ class Token(object):
     def __init__(self,type, value=None):
         self.type=type
         self.value=value
+    def __len__(self):
+        return len(self.tokenStream)
     def __str__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
     def __repr__(self):
@@ -19,7 +21,9 @@ class Scanner(object):
         self.verbose=False
         self.patterns=[]
         self.actions=[]
+        self.tokenStream = []
 #we'll turn this into paralell lists.
+        #this could be done with map()
         for k in spec.iterkeys():
             self.patterns.append(re.compile(k))
             self.actions.append(spec[k])

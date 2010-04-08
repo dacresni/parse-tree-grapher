@@ -15,7 +15,7 @@ class Grammar(object):
                 firstbreak = stack.index(breaktok,i)
                 newrule.rightHand.extend(stack[i+1:firstbreak])
                 self.rules.append(newrule)
-                findbreaks(stack, firstbreak+1,left)
+                __findbreaks(stack, firstbreak+1,left)
                 #wehre
             else:
                 #firstbreak = len(stack) #base case 
@@ -54,9 +54,9 @@ class Grammar(object):
         #another function 
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
-        rightHand=(lex1,lex2) #make a tuple
-        if  self.ruleDict[rightHand]:
-            return leftHand
+        #for rule in self.rules:
+        #    if rule.rightHand == [lex1 ,lex2]
+        #        return rule.leftHand
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
@@ -67,13 +67,14 @@ class Grammar(object):
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
-        for i in range(len(rule.rightHand)):
-            token=rule.rightHand[i]
-            if token.type==None: 
-                left= Token("terminal_%s"%token.value ) 
-                right=[Token("terminal","%s"%token.value)]
-                rule.rightHand[i]=Token("terminal_%s"%token.value)
-                self.rules.append(newrule)
+        if len(rule.rightHand)>1: 
+            for i in range(len(rule.rightHand)):
+                token = rule.rightHand[i]
+                if token.type=="terminal" :
+                    left= Token("terminal_%s"%token.value ) 
+                    right=[Token("terminal","%s"%token.value)]
+                    rule.rightHand[i]=Token("terminal_%s"%token.value)
+                    self.rules.append(Rule(left,right) )
 
     def __binaryize(self,rule):        
         #step 2 make binary

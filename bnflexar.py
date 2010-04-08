@@ -17,29 +17,11 @@ class BnfLexar(Scanner): #should I subclass this or not
             r'\|':self.brake,
             r'::=':self.equil
         }
-        self.tokenStream=[]
         Scanner.__init__(self,specDict) #how you initialize parent class
 if __name__=='__main__' :
     instance = BnfLexar() #don't forget the end perentheces
 # note, it won't import this grammar correctly
-    string = """
-<syntax> ::= <rule> | <rule> <syntax>
- <rule>   ::= <opt-whitespace> "<" <rule-name> ">" <opt-whitespace> "::=" 
-                 <opt-whitespace> <expression> <line-end>
- <opt-whitespace> ::= " " <opt-whitespace> | ""  
- <expression>     ::= <list> | <list> "|" <expression>
- <line-end>       ::= <opt-whitespace> <EOL> | <line-end> <line-end>
- <list>    ::= <term> | <term> <opt-whitespace> <list>
- <term>    ::= <literal> | "<" <rule-name> ">"
- <literal> ::= '"' <text> '"' | "'" <text> "'"  """
-    #def scanString(self, string):
     print string
-    instance.setVerbose()
-    instance.scanWord(string)
-    for token in instance.tokenStream:
-        print token
-    print instance
-    print "end scanning of string"
     readscann=BnfLexar()
     readscann.setVerbose()
     print "end of verbose"
