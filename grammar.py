@@ -30,26 +30,26 @@ class Grammar(object):
         pos = 0
         end = len(stream)
        #just for testing
-        print "stream",stream
+       # print "stream",stream
         equiltok = Token("equils")
         while pos<end:
             stack = []
             #here stream[pos] is ::=
             #genrule
             left=stream[pos-1] #this should be a left hand rule
-            print " streamSlice=%s;"%stream[pos+1:]
+            #print " streamSlice=%s;"%stream[pos+1:]
             if equiltok in stream[pos+1:]:
                 stop = stream.index(equiltok,pos+1)
             #which should be the start of the next rule 
                 stack.extend(stream[pos+1:stop-1])# this time i ommetted the ::= 
                 __findbreaks(stack,0,left)
-                print "pos %i stop %i stack %s "%(pos,stop,stack)
+                #print "pos %i stop %i stack %s "%(pos,stop,stack)
                 pos=stop
             else:
                 stack.extend(stream[pos+1:])
                 __findbreaks(stack,0,left)
-                print "exit pos %i stop %i stack %s "%(pos,stop,stack)
-                print "newgrammar = %s"%self
+                #print "exit pos %i stop %i stack %s "%(pos,stop,stack)
+                #print "newgrammar = %s"%self
                 return
         #another function 
     def shortMatch(self, lex1 ,lex2=""):
@@ -71,9 +71,9 @@ class Grammar(object):
             for i in range(len(rule.rightHand)):
                 token = rule.rightHand[i]
                 if token.type=="terminal" :
-                    left= Token("terminal_%s"%token.value ) 
+                    left= Token( type ="terminal_%s"%token.value ) 
                     right=[Token("terminal","%s"%token.value)]
-                    rule.rightHand[i]=Token("terminal_%s"%token.value)
+                    rule.rightHand[i]=Token(type="terminal_%s"%token.value)
                     self.rules.append(Rule(left,right) )
 
     def __binaryize(self,rule):        
@@ -84,7 +84,7 @@ class Grammar(object):
             newToks=[]
             handLength=len(rule.rightHand)
             for i in rule.rightHand:
-                newToks.append(Token("aux_%s"%i.value) )
+                newToks.append(Token(type="aux_%s"%i.value) )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
             for i in range(1,handLength):
