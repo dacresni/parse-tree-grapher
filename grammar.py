@@ -36,12 +36,12 @@ class Grammar(object):
             stack = []
             #here stream[pos] is ::=
             #genrule
-            left=stream[pos-1] #this should be a left hand rule
-            #print " streamSlice=%s;"%stream[pos+1:]
-            if equiltok in stream[pos+1:]:
-                stop = stream.index(equiltok,pos+1)
+            left=stream[pos] #this should be a left hand rule
+            #print " streamSlice=%s;"%stream[pos+2:]
+            if equiltok in stream[pos+2:]:
+                stop = stream.index(equiltok,pos+2)
             #which should be the start of the next rule 
-                stack.extend(stream[pos+1:stop-1])# this time i ommetted the ::= 
+                stack.extend(stream[pos+2:stop-1])# this time i ommetted the ::= 
                 __findbreaks(stack,0,left)
                 #print "pos %i stop %i stack %s "%(pos,stop,stack)
                 pos=stop
