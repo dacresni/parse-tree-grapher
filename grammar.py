@@ -12,6 +12,7 @@ class Grammar(object):
             breaktok =Token("break") 
             newrule =Rule(left)
             if breaktok in stack[i:] :
+		print "breakFound"
                 firstbreak = stack.index(breaktok,i)
                 newrule.rightHand.extend(stack[i+1:firstbreak])
                 self.rules.append(newrule)
@@ -19,6 +20,7 @@ class Grammar(object):
                 #wehre
             else:
                 #firstbreak = len(stack) #base case 
+		print "breakFound"
                 newrule.rightHand.extend(stack[i+1:])
                 self.rules.append(newrule)
         
@@ -27,6 +29,7 @@ class Grammar(object):
             lex.setVerbose()
         lex.scanFile(source)
         stream =lex.tokenStream
+	print "stream==%s"%stream
         pos = 0
         end = len(stream)
        #just for testing
