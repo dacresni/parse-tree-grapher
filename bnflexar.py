@@ -3,11 +3,13 @@ from lexar import Token, Scanner
 # 3 out of 4 methods are going to be overloaded by the child  does the nested class inheret?
 class BnfLexar(Scanner): #should I subclass this or not
     def rule(self,match):
-        self.tokenStream.append(Token("rule",match.string) )
+        result=match.string.strip("\n")    
+        self.tokenStream.append(Token("rule",result) )
     def equil(self,match):
         self.tokenStream.append(Token("equils") )
     def literal(self,match):
-        self.tokenStream.append(Token("terminal",match.string))
+        result=match.string.strip("\n")    
+        self.tokenStream.append(Token("terminal",result))
     def brake(self,match):
         self.tokenStream.append(Token("break"))
     def __init__(self):

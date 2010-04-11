@@ -54,9 +54,11 @@ class Grammar(object):
         #another function 
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
-        #for rule in self.rules:
-        #    if rule.rightHand == [lex1 ,lex2]
-        #        return rule.leftHand
+        for rule in self.rules:
+            if rule.rightHand == [lex1 ,lex2]:
+                return rule.leftHand
+            else:
+                return None
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):

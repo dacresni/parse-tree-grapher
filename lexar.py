@@ -3,8 +3,12 @@
 import re
 class Token(object):
     def __init__(self,type, value=None):
-        self.type=type
-        self.value=value
+        if value == None:
+            self.type="terminal"
+            self.value=type
+        else:
+            self.type=type
+            self.value=value
     def __len__(self):
         return len(self.tokenStream)
     def __str__(self):
