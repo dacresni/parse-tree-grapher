@@ -72,15 +72,14 @@ class Scanner(object):
         representation+= '}'
         return representation
         #print each rule action pair
-if __name__ == '__main__':
-    from balance import BalanceLexer
-	lex=BalanceLexer()
-	lex.setVerbose()
-	source =open('g1.txt')
-	lex.scanFile(source)
-	stream =lex.tokenStream
-	print "stream==%s"%stream
-	token = Token("token")
-	print "token created sucessfully"
-if __name__=='__main__' :
-	
+
+    if __name__ == '__main__':
+        from balance import BalanceLexer
+           lex=BalanceLexer()
+           lex.setVerbose()
+           source =open('g1.txt')
+           lex.scanFile(source)
+           stream =lex.tokenStream
+           print "stream==%s"%stream
+           token = Token("token")
+           print "token created sucessfully"
