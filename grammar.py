@@ -10,18 +10,17 @@ class Grammar(object):
     def generate(self, source, verbose=False):
         def __findbreaks( stack ,i, left):# we need to text this function 
             breaktok =Token("break") #### ############# there should be no  break tokens in this grammar
-            print breaktok
             newrule =Rule(left)
             if breaktok in stack[i:] :
-		print "breakFound"
+		print "breakFound %s"%firstbreak
                 firstbreak = stack.index(breaktok,i)
+                print firstbreak
                 newrule.rightHand.extend(stack[i+1:firstbreak])
                 self.rules.append(newrule)
                 __findbreaks(stack, firstbreak+1,left)
                 #wehre
             else:
                 #firstbreak = len(stack) #base case 
-		print "breakFound"
                 newrule.rightHand.extend(stack[i+1:])
                 self.rules.append(newrule)
         
