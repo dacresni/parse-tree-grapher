@@ -9,12 +9,10 @@ class Grammar(object):
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
         def __findbreaks( stack ,i, left):# we need to text this function 
-            breaktok =Token("break") #### ############# there should be no  break tokens in this grammar
+            breaktok =Token("break") 
             newrule =Rule(left)
             if breaktok in stack[i:] :
-		print "breakFound %s"%firstbreak
                 firstbreak = stack.index(breaktok,i)
-                print firstbreak
                 newrule.rightHand.extend(stack[i+1:firstbreak])
                 self.rules.append(newrule)
                 __findbreaks(stack, firstbreak+1,left)
@@ -29,7 +27,6 @@ class Grammar(object):
             lex.setVerbose()
         lex.scanFile(source)
         stream =lex.tokenStream
-	print "stream==%s"%stream
         pos = 0
         end = len(stream)
        #just for testing
@@ -37,14 +34,13 @@ class Grammar(object):
         equiltok = Token("equils")
         while pos<end:
             stack = []
-            #here stream[pos+1] is ::=
+            #here stream[pos] is ::=
             #genrule
             left=stream[pos] #this should be a left hand rule
             #print " streamSlice=%s;"%stream[pos+2:]
             if equiltok in stream[pos+2:]:
                 stop = stream.index(equiltok,pos+2)
             #which should be the start of the next rule 
-                print "slice=%s"%stream[pos+2:stop-1]
                 stack.extend(stream[pos+2:stop-1])# this time i ommetted the ::= 
                 __findbreaks(stack,0,left)
                 #print "pos %i stop %i stack %s "%(pos,stop,stack)
@@ -53,7 +49,7 @@ class Grammar(object):
                 stack.extend(stream[pos+1:])
                 __findbreaks(stack,0,left)
                 #print "exit pos %i stop %i stack %s "%(pos,stop,stack)
-               #print "newgrammar = %s"%self
+                #print "newgrammar = %s"%self
                 return
         #another function 
     def shortMatch(self, lex1 ,lex2=""):

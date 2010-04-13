@@ -17,8 +17,6 @@ class Token(object):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
     def __eq__(self, other):
         return (self.type == other.type and self.value == other.value)
-    def __comp__(self, other):
-        return (self.type == other.type and self.value == other.value)
 class Scanner(object):
     """ takes a dictionary of regex:function object pairs
         functions should expect match objects as parameters 
@@ -74,15 +72,7 @@ class Scanner(object):
         representation+= '}'
         return representation
         #print each rule action pair
-    def test():
-       from balance import BalanceLexer
-       lex=BalanceLexer()
-       lex.setVerbose()
-       source =open('g1.txt')
-       lex.scanFile(source)
-       stream =lex.tokenStream
-       print "stream==%s"%stream
-       token = Token("token")
-       print "token created sucessfully"
-    if __name__ == '__main__':
-       test() 
+
+if __name__=='__main__' :
+    token = Token("token")
+    print "token created sucessfully"
