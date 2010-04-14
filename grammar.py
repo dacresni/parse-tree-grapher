@@ -13,20 +13,15 @@ class Grammar(object):
             newrule =Rule(left)
             if breaktok in stack[i:] :
                 firstbreak = stack.index(breaktok,i)
-		#print "breakFound %s"%firstbreak
-                #print "newrule",newrule
-                #print "firstbrek",firstbreak
-                newrule.rightHand.extend(stack[i:firstbreak])
+                newrule.rightHand.extend(stack[i+1:firstbreak])
                 self.rules.append(newrule)
                 __findbreaks(stack, firstbreak+1,left)
                 #wehre
             else:
-                #print "no breakes found i=%i"%i
-                #print "equils",stack[i:]
-                newrule.rightHand=stack[i:]
-                #print newrule,"newrule"
+                #firstbreak = len(stack) #base case 
+                newrule.rightHand.extend(stack[i+1:])
                 self.rules.append(newrule)
-
+        
         lex=BnfLexar()
         if verbose:
             lex.setVerbose()
@@ -35,28 +30,28 @@ class Grammar(object):
         pos = 0
         end = len(stream)
        #just for testing
-       #print "stream"%stream
+       # print "stream",stream
+        equiltok = Token("equils")
         while pos<end:
             stack = []
-            delem = Token('end') 
-            left=stream[pos]
-            print 'delem',delem
-            print 'left',left
-            print 'pos',pos
-            if delem in stream[pos:]:
-                stop= stream.index(delem,pos)
-                print 'stop',stop
-                stack.extend(stream[pos:stop])
-                left = stack[0]
-                __findbreaks(stack,2,left)
-                print "stack",stack
+            #here stream[pos] is ::=
+            #genrule
+            left=stream[pos] #this should be a left hand rule
+            #print " streamSlice=%s;"%stream[pos+2:]
+            if equiltok in stream[pos+2:]:
+                stop = stream.index(equiltok,pos+2)
+            #which should be the start of the next rule 
+                stack.extend(stream[pos+2:stop-1])# this time i ommetted the ::= 
+                __findbreaks(stack,0,left)
+                #print "pos %i stop %i stack %s "%(pos,stop,stack)
+                pos=stop
             else:
-                stack.extend(stream[pos:])
-                left = stack[0]
-                __findbreaks(stack,2,left)
-                stop=len(stream)
-                print "no delem",stack
-            pos=stop+1
+                stack.extend(stream[pos+1:])
+                __findbreaks(stack,0,left)
+                #print "exit pos %i stop %i stack %s "%(pos,stop,stack)
+                #print "newgrammar = %s"%self
+                return
+        #another function 
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         for rule in self.rules:

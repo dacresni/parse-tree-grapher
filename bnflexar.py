@@ -12,28 +12,26 @@ class BnfLexar(Scanner): #should I subclass this or not
         self.tokenStream.append(Token("terminal",result))
     def brake(self,match):
         self.tokenStream.append(Token("break"))
-    def end(self,match):
-        self.tokenStream.append(Token("end"))
     def __init__(self):
         specDict={
             r'^".+"$':self.literal,
            r'^\<\S+\>$': self.rule, 
             r'\|':self.brake,
-           r'::=':self.equil,
-           r';':self.end,
+            r'::=':self.equil
         }
         Scanner.__init__(self,specDict) #how you initialize parent class
 if __name__=='__main__' :
-    from bnflexar import BnfLexar
-    instance =BnfLexar() #don't forget the end perentheces
+    instance = BnfLexar() #don't forget the end perentheces
 # note, it won't import this grammar correctly
     print string
-    instance.setVerbose()
+    readscann=BnfLexar()
+    readscann.setVerbose()
     print "end of verbose"
     try:
         meta = open('g1.txt','r')
-        instance.scanFile('g1.txt')
     except IOError:
         print 'metabnf not found'
-    print instance.tokenStream
+    readscann.scanFile(meta)
+    for token in readscann.tokenStream:
+        print token
     print "BnfLexar imported sucessfully"
