@@ -23,7 +23,7 @@ class Grammar(object):
                 newrule.rightHand.extend(stack[i:])
                 self.rules.append(newrule)
         
-        def __findEq(self, stack):
+        def __findEq( stack):
             equiltok = Token("equils")
             if not equiltok in stack:
                 print "something's up"
@@ -41,7 +41,6 @@ class Grammar(object):
         end = len(stream)
        #just for testing
        # print "stream"%stream
-        
         while pos<end:
             stack = []
             delem = Token('end') 
@@ -53,14 +52,15 @@ class Grammar(object):
                 stop= stream.index(delem,pos)
                 print 'stop',stop
                 stack.extend(stream[pos:stop])
-                __findEq(stack)
+                left = stack[0]
+                __findbreaks(stack,2,left)
+                print "stack",stack
             else:
-                newRul=Rule(stack[0])
-                newRul.rightHand.extend(stack[2:])
-                self.rules.append(newRul)
-            stop=len(stream)
-            stack.extend(stream[pos:stop])
-            print "stack",stack
+                stack.extend(stream[pos:])
+                left = stack[0]
+                __findbreaks(stack,2,left)
+                stop=len(stream)
+                print "stack",stack
             pos=stop+1
 
     def shortMatch(self, lex1 ,lex2=""):
