@@ -9,7 +9,7 @@ class Grammar(object):
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
         def __findbreaks( stack ,i, left):# we need to text this function 
-            breaktok =Token("break") #### ############# there should be no  break tokens in this grammar
+            breaktok =Token("break") 
             newrule =Rule(left)
             if breaktok in stack[i:] :
                 firstbreak = stack.index(breaktok,i)
@@ -36,7 +36,6 @@ class Grammar(object):
             lex.setVerbose()
         lex.scanFile(source)
         stream =lex.tokenStream
-	print "stream==%s"%stream
         pos = 0
         end = len(stream)
        #just for testing
@@ -62,7 +61,6 @@ class Grammar(object):
                 stop=len(stream)
                 print "stack",stack
             pos=stop+1
-
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         for rule in self.rules:
