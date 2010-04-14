@@ -13,29 +13,20 @@ class Grammar(object):
             newrule =Rule(left)
             if breaktok in stack[i:] :
                 firstbreak = stack.index(breaktok,i)
-		print "breakFound %s"%firstbreak
-                print "newrule",newrule
-                print "firstbrek",firstbreak
+		#print "breakFound %s"%firstbreak
+                #print "newrule",newrule
+                #print "firstbrek",firstbreak
                 newrule.rightHand.extend(stack[i:firstbreak])
                 self.rules.append(newrule)
                 __findbreaks(stack, firstbreak+1,left)
                 #wehre
             else:
-                print "no breakes found i=%i"%i
-                print "equils",stack[i:]
+                #print "no breakes found i=%i"%i
+                #print "equils",stack[i:]
                 newrule.rightHand=stack[i:]
-                print newrule,"newrule"
+                #print newrule,"newrule"
                 self.rules.append(newrule)
 
-        
-        def __findEq( stack):
-            equiltok = Token("equils")
-            if not equiltok in stack:
-                print "something's up"
-            else:
-                left = stack[0]
-                __findbreaks(stack,2,left)
-        
         lex=BnfLexar()
         if verbose:
             lex.setVerbose()
@@ -44,7 +35,7 @@ class Grammar(object):
         pos = 0
         end = len(stream)
        #just for testing
-       # print "stream"%stream
+       #print "stream"%stream
         while pos<end:
             stack = []
             delem = Token('end') 
