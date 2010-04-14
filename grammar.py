@@ -57,6 +57,8 @@ class Grammar(object):
                 stop=len(stream)
                 print "no delem",stack
             pos=stop+1
+
+
     def shortMatch(self, lex1 ,lex2=""):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         for rule in self.rules:
