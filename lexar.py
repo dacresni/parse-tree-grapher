@@ -2,13 +2,9 @@
 
 import re
 class Token(object):
-    def __init__(self,type, value=None):
-        if value == None:
-            self.type="terminal"
-            self.value=type
-        else:
-            self.type=type
-            self.value=value
+    def __init__(self,type="terminal", value=None):
+        self.type=type
+        self.value=value
     def __len__(self):
         return len(self.tokenStream)
     def __str__(self):
@@ -16,6 +12,8 @@ class Token(object):
     def __repr__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
     def __eq__(self, other):
+        return (self.type == other.type and self.value == other.value)
+    def __comp__(self, other):
         return (self.type == other.type and self.value == other.value)
 class Scanner(object):
     """ takes a dictionary of regex:function object pairs
@@ -72,7 +70,16 @@ class Scanner(object):
         representation+= '}'
         return representation
         #print each rule action pair
-
-if __name__=='__main__' :
-    token = Token("token")
-    print "token created sucessfully"
+def test():
+       from balance import BalanceLexer
+       lex=BalanceLexer()
+       lex.setVerbose()
+       source =open('g1.txt')
+       lex.scanFile(source)
+       stream =lex.tokenStream
+       print "stream==%s"%stream
+       token = Token("token")
+       print token
+       print "token created sucessfully"
+if __name__ == '__main__':
+    test() 

@@ -19,9 +19,13 @@ if __name__=='__main__':
     readscann.setVerbose()
     print "end of verbose"
     try:
-        meta = open('g1.txt','r')
+        source= open('g1.txt','r')
     except IOError:
-        print 'metabnf not found'
-    readscann.scanFile(meta)
+        print 'g1 not found'
+    try:
+        balance= open('balance.txt','r')
+    except IOError:
+        print 'balance not found'
+    readscann.scanFile(balance)
     print readscann.tokenStream
-    print "BnfLexar imported sucessfully"
+    print "BnfLexar importedsucessfully"
