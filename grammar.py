@@ -58,11 +58,17 @@ class Grammar(object):
                 print "no delem",stack
             pos=stop+1
 
+    def longMatch(self, lex1 ,lex2):
+        for rule in self.rules:
+            if rule.rightHand == [lex1,lex2]:
+                return rule.leftHand
+            else:
+                return None
 
-    def shortMatch(self, lex1 ,lex2=""):
+    def shortMatch(self, lex1):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         for rule in self.rules:
-            if rule.rightHand == [lex1 ,lex2]:
+            if rule.rightHand == [lex1 ]:
                 return rule.leftHand
             else:
                 return None

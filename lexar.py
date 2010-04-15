@@ -12,7 +12,12 @@ class Token(object):
     def __repr__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
     def __eq__(self, other):
-        return (self.type == other.type and self.value == other.value)
+        if not self.value:
+            return (other.value==None)
+        elif (other == None):
+            return None
+        else:
+            return (self.type == other.type and self.value == other.value)
     def __comp__(self, other):
         return (self.type == other.type and self.value == other.value)
 class Scanner(object):

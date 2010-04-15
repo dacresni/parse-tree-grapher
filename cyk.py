@@ -16,7 +16,7 @@ class CYKChart(object):
             for i in range(0,(n-j+1)+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 chart[i].append([]) #append the empty set
                 for k in range(0,j):
-                    chart[i][j].append(chart[i][j] or aGrammar.shortMatch(chart[i][k],chart[i+k][j-k])) #if nothings there, try the chart it MUST be in that order 
+                    chart[i][j].append(chart[i][j] or aGrammar.longMatch(chart[i][k],chart[i+k][j-k])) #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i
         #end for j
