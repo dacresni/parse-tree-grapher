@@ -9,7 +9,7 @@ def solve():
     lexer= BalanceLexer()
     balance=open('balance.txt','r')
     lexer.scanFile(balance)
-    S=lexer.tokenStream
+    S=lexer.getStream()
     C=CYKChart()
     C.Build_CYK_Chart(G,S)
     print C

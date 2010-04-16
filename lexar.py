@@ -12,10 +12,8 @@ class Token(object):
     def __repr__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
     def __eq__(self, other):
-        if not self.value:
-            return (other.value==None)
-        elif (other == None):
-            return None
+        if self.value==None:
+            return (other==None)
         else:
             return (self.type == other.type and self.value == other.value)
     def __comp__(self, other):
@@ -62,7 +60,8 @@ class Scanner(object):
             self[word]
         #we should make a more malualbe 
 
-
+    def getStream(self):
+        return self.tokenStream
     def setVerbose(self):
         """sets behavior to print out the pattern matched at every match""" 
         self.verbose = True

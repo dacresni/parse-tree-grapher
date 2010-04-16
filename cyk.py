@@ -12,11 +12,15 @@ class CYKChart(object):
         chart =self.chart # for n=5 thats [[][][][][]]
         for i in aString :
             chart.append([ aGrammar.shortMatch(i) ]) # append a list with the result of shortMatch(i) if no match, shortMatch should return None
-        for j in  range(1,n+1): #range drops the endpoint
-            for i in range(0,(n-j+1)+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
+        print chart
+        for j in range(1,n+1): #range drops the endpoint
+            for i in range((n-j+1)+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
+                print i,j
                 chart[i].append([]) #append the empty set
-                for k in range(0,j):
-                    chart[i][j].append(chart[i][j] or aGrammar.longMatch(chart[i][k],chart[i+k][j-k])) #if nothings there, try the chart it MUST be in that order 
+                for k in range(j):
+                    if not chart[i][j]:
+                        chart[i][j].append(aGrammar.longMatch(chart[i][k],chart[i+k][j-k]))
+                    #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i
         #end for j

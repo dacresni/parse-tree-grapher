@@ -139,7 +139,7 @@ class Rule(object):
 
 def test():
    try:
-    source=open('g1.txt','r')
+    source=open('g2.txt','r')
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
