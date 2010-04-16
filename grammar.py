@@ -9,7 +9,7 @@ class Grammar(object):
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
         def __findbreaks( stack ,i, left):# we need to text this function 
-            breaktok =Token("break") 
+            breaktok =Token(value="break") 
             newrule =Rule(left)
             if breaktok in stack[i:] :
                 firstbreak = stack.index(breaktok,i)
@@ -38,7 +38,7 @@ class Grammar(object):
        #print "stream"%stream
         while pos<end:
             stack = []
-            delem = Token('end') 
+            delem = Token(value='end') 
             left=stream[pos]
             print 'delem',delem
             print 'left',left
@@ -58,11 +58,17 @@ class Grammar(object):
                 print "no delem",stack
             pos=stop+1
 
+    def longMatch(self, lex1 ,lex2):
+        for rule in self.rules:
+            if rule.rightHand == [lex1,lex2]:
+                return rule.leftHand
+            else:
+                return None
 
-    def shortMatch(self, lex1 ,lex2=""):
+    def shortMatch(self, lex1):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         for rule in self.rules:
-            if rule.rightHand == [lex1 ,lex2]:
+            if rule.rightHand == [lex1 ]:
                 return rule.leftHand
             else:
                 return None
@@ -93,7 +99,7 @@ class Grammar(object):
             newToks=[]
             handLength=len(rule.rightHand)
             for i in rule.rightHand:
-                newToks.append(Token(type="aux_%s"%i.value) )
+                newToks.append(Token(type="aux_%s"%i.type) )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
             for i in range(1,handLength):
@@ -133,7 +139,7 @@ class Rule(object):
 
 def test():
    try:
-    source=open('g1.txt','r')
+    source=open('g2.txt','r')
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
@@ -142,8 +148,6 @@ def test():
    print "oldgrammar" 
    print bnf
    bnf.bnf2cnf()
-   print "new grammer"
-   print bnf
    product="%s"%bnf.__str__()
    print "product \n %s"%product
 if __name__=='__main__':
