@@ -4,7 +4,7 @@ from lexar import Token, Scanner
 class BnfLexar(Scanner): #should I subclass this or not
     def rule(self,match):
         result=match.string.strip('\n',)    
-        self.tokenStream.append(Token("rule",result) )
+        self.tokenStream.append(Token("nonterminal",result) )
     def equil(self,match):
         self.tokenStream.append(Token(value="equils") )
     def literal(self,match):
@@ -16,9 +16,9 @@ class BnfLexar(Scanner): #should I subclass this or not
         self.tokenStream.append(Token(value="end"))
     def __init__(self):
         specDict={
-            r'^".+"$':self.literal,
+           r'^".+"$':self.literal,
            r'^\<\S+\>$': self.rule, 
-            r'\|':self.brake,
+           r'\|':self.brake,
            r'::=':self.equil,
            r';':self.end,
         }

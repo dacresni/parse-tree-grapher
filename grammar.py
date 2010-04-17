@@ -59,19 +59,22 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
+        result = ""
         for rule in self.rules:
             if rule.rightHand == [lex1,lex2]:
-                return rule.leftHand
+                 return rule.leftHand
             else:
-                return None
-
+                result = None
+            return result
     def shortMatch(self, lex1):
         """ matches a list of terminals or nonterminal to a nonterminal"""
+        result = ""
         for rule in self.rules:
             if rule.rightHand == [lex1 ]:
                 return rule.leftHand
             else:
-                return None
+                result = None
+            return result
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
@@ -86,9 +89,9 @@ class Grammar(object):
             for i in range(len(rule.rightHand)):
                 token = rule.rightHand[i]
                 if token.type=="terminal" :
-                    left= Token( type ="terminal_%s"%token.value ) 
+                    left= Token("nonterminal", "U_%s"%token.value ) 
                     right=[Token("terminal","%s"%token.value)]
-                    rule.rightHand[i]=Token(type="terminal_%s"%token.value)
+                    rule.rightHand[i]=Token("nonterminal","U_%s"%token.value)
                     self.rules.append(Rule(left,right) )
 
     def __binaryize(self,rule):        
@@ -99,11 +102,13 @@ class Grammar(object):
             newToks=[]
             handLength=len(rule.rightHand)
             for i in rule.rightHand:
-                newToks.append(Token(type="aux_%s"%i.type) )
+                newToks.append(Token("nonterminal","W_%s"%i.value) )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
             for i in range(1,handLength):
                 self.rules.append(Rule(newToks[i-1],[ newToks[i], oldRight[i] ]) )#beautifull 
+    def __removeEpsulon(self, rule):
+        pass
     def __uniProductionsEleminate(self, rule):
         """eleminate unit productions """
         pass
