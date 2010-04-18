@@ -4,7 +4,7 @@ from bnflexar import BnfLexar
 class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
-        self.rules=[ ]
+        self.rules=[]
         #self.startSymbole
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
@@ -82,6 +82,7 @@ class Grammar(object):
             self.__isolateTerminals(rule)
         for rule in self.rules:
             self.__binaryize(rule)
+        self.rules=set(self.rules)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
