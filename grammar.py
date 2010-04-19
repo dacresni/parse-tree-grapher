@@ -59,27 +59,26 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-        result = ""
-        for rule in self.rules:
+         i=0
+         while i <len(self):
+            rule =self.rules[i]
+            print "test",rule.rightHand, lex1
             if rule.rightHand == [lex1,lex2]:
                 print "return",rule.leftHand
                 return rule.leftHand
-            else:
-                result = None
-            return result
+            i+=1
+         return None
     def shortMatch(self, lex1):
-        """ matches a list of terminals or nonterminal to a nonterminal"""
-        print "lex1",lex1 
-        result = ""
-        for rule in self.rules:
-            if rule.rightHand == [lex1 ]:
+         """ matches a list of terminals or nonterminal to a nonterminal"""
+         i=0
+         while i <len(self):
+            rule =self.rules[i]
+            print "test",rule.rightHand, lex1
+            if rule.rightHand == [lex1]:
                 print "return",rule.leftHand
                 return rule.leftHand
-                
-            else:
-                print "return none"
-                result = None
-            return result
+            i+=1
+         return None
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
@@ -88,6 +87,7 @@ class Grammar(object):
         for rule in self.rules:
             self.__binaryize(rule)
         self.rules=set(self.rules)
+        self.rules = list(self.rules)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls

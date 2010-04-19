@@ -11,6 +11,7 @@ class CYKChart(object):
         n = len(aString)
         chart =self.chart # for n=5 thats [[][][][][]]
         print "aString",aString
+        print "aGrammar",aGrammar
         for i in aString :
             chart.append([ aGrammar.shortMatch(i) ]) # append a list with the result of shortMatch(i) if no match, shortMatch should return None
         print "chart",chart
