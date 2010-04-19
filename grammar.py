@@ -59,22 +59,26 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-        result = ""
-        for rule in self.rules:
+         i=0
+         while i <len(self):
+            rule =self.rules[i]
+            print "test",rule.rightHand, lex1
             if rule.rightHand == [lex1,lex2]:
-                 return rule.leftHand
-            else:
-                result = None
-            return result
-    def shortMatch(self, lex1):
-        """ matches a list of terminals or nonterminal to a nonterminal"""
-        result = ""
-        for rule in self.rules:
-            if rule.rightHand == [lex1 ]:
+                print "return",rule.leftHand
                 return rule.leftHand
-            else:
-                result = None
-            return result
+            i+=1
+         return None
+    def shortMatch(self, lex1):
+         """ matches a list of terminals or nonterminal to a nonterminal"""
+         i=0
+         while i <len(self):
+            rule =self.rules[i]
+            print "test",rule.rightHand, lex1
+            if rule.rightHand == [lex1]:
+                print "return",rule.leftHand
+                return rule.leftHand
+            i+=1
+         return None
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
@@ -83,6 +87,7 @@ class Grammar(object):
         for rule in self.rules:
             self.__binaryize(rule)
         self.rules=set(self.rules)
+        self.rules = list(self.rules)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
@@ -108,7 +113,7 @@ class Grammar(object):
             rule.rightHand = [oldRight[0],newToks[0]]
             for i in range(1,handLength):
                 self.rules.append(Rule(newToks[i-1],[ newToks[i], oldRight[i] ]) )#beautifull 
-    def __removeEpsulon(self, rule):
+    def __removeEpsilon(self, rule):
         pass
     def __uniProductionsEleminate(self, rule):
         """eleminate unit productions """
@@ -156,5 +161,9 @@ def test():
    bnf.bnf2cnf()
    product="%s"%bnf.__str__()
    print "product \n %s"%product
+   "test shortmatch"
+   bnf.shortMatch(Token(value="("))
+
+
 if __name__=='__main__':
     test()

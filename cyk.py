@@ -10,11 +10,13 @@ class CYKChart(object):
     def Build_CYK_Chart (self, aGrammar,aString, ) : # a 
         n = len(aString)
         chart =self.chart # for n=5 thats [[][][][][]]
+        print "aString",aString
+        print "aGrammar",aGrammar
         for i in aString :
             chart.append([ aGrammar.shortMatch(i) ]) # append a list with the result of shortMatch(i) if no match, shortMatch should return None
-        print chart
+        print "chart",chart
         for j in range(1,n+1): #range drops the endpoint
-            for i in range((n-j+1)+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
+            for i in range((n-j+1)):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 print i,j
                 chart[i].append([]) #append the empty set
                 for k in range(j):
