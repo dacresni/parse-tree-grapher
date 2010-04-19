@@ -62,17 +62,22 @@ class Grammar(object):
         result = ""
         for rule in self.rules:
             if rule.rightHand == [lex1,lex2]:
-                 return rule.leftHand
+                print "return",rule.leftHand
+                return rule.leftHand
             else:
                 result = None
             return result
     def shortMatch(self, lex1):
         """ matches a list of terminals or nonterminal to a nonterminal"""
+        print "lex1",lex1 
         result = ""
         for rule in self.rules:
             if rule.rightHand == [lex1 ]:
+                print "return",rule.leftHand
                 return rule.leftHand
+                
             else:
+                print "return none"
                 result = None
             return result
     def __len__(self):
@@ -108,7 +113,7 @@ class Grammar(object):
             rule.rightHand = [oldRight[0],newToks[0]]
             for i in range(1,handLength):
                 self.rules.append(Rule(newToks[i-1],[ newToks[i], oldRight[i] ]) )#beautifull 
-    def __removeEpsulon(self, rule):
+    def __removeEpsilon(self, rule):
         pass
     def __uniProductionsEleminate(self, rule):
         """eleminate unit productions """
@@ -145,7 +150,7 @@ class Rule(object):
 
 def test():
    try:
-    source=open('g2.txt','r')
+    source=open('g1.txt','r')
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
@@ -156,5 +161,9 @@ def test():
    bnf.bnf2cnf()
    product="%s"%bnf.__str__()
    print "product \n %s"%product
+   "test shortmatch"
+   bnf.shortMatch(Token(value="("))
+
+
 if __name__=='__main__':
     test()

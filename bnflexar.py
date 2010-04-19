@@ -14,6 +14,9 @@ class BnfLexar(Scanner): #should I subclass this or not
         self.tokenStream.append(Token(value="break"))
     def end(self,match):
         self.tokenStream.append(Token(value="end"))
+    def epsilon(self,match):
+        self.tokenStream.append(Token(value="epsilon"))
+       
     def __init__(self):
         specDict={
            r'^".+"$':self.literal,
@@ -21,6 +24,7 @@ class BnfLexar(Scanner): #should I subclass this or not
            r'\|':self.brake,
            r'::=':self.equil,
            r';':self.end,
+           r'""':self.epsilon,
         }
         Scanner.__init__(self,specDict) #how you initialize parent class
 if __name__=='__main__' :

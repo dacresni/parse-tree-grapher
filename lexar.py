@@ -12,6 +12,8 @@ class Token(object):
     def __repr__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
     def __eq__(self, other):
+        if other == None:
+            return False
         if self.value==None:
             return (other==None)
         else:
