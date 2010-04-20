@@ -62,6 +62,7 @@ class Grammar(object):
          i=0
          while i <len(self):
             rule =self.rules[i]
+            print "test",rule.rightHand, lex1
             if rule.rightHand == [lex1,lex2]:
                 print "return",rule.leftHand
                 return rule.leftHand
@@ -72,6 +73,7 @@ class Grammar(object):
          i=0
          while i <len(self):
             rule =self.rules[i]
+            print "test",rule.rightHand, lex1
             if rule.rightHand == [lex1]:
                 print "return",rule.leftHand
                 return rule.leftHand
