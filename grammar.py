@@ -4,7 +4,7 @@ from bnflexar import BnfLexar
 class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
-        self.rules=[ ]
+        self.rules=[]
         #self.startSymbole
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
@@ -59,19 +59,27 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-        for rule in self.rules:
-            if rule.rightHand == [lex1,lex2]:
-                return rule.leftHand
-            else:
-                return None
 
-    def shortMatch(self, lex1):
-        """ matches a list of terminals or nonterminal to a nonterminal"""
-        for rule in self.rules:
-            if rule.rightHand == [lex1 ]:
+         i=0
+         while i <len(self):
+            rule =self.rules[i]
+            print "long test",rule.rightHand, lex1, lex2
+            if rule.rightHand == [lex1,lex2]:
+                print "return",rule.leftHand
                 return rule.leftHand
-            else:
-                return None
+            i+=1
+            #raise error
+    def shortMatch(self, lex1):
+         """ matches a list of terminals or nonterminal to a nonterminal"""
+         i=0
+         while i <len(self):
+            rule =self.rules[i]
+            print "short test",rule.rightHand, lex1
+            if rule.rightHand == [lex1]:
+                print "return",rule.leftHand
+                return rule.leftHand
+            i+=1
+            #raise error
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
@@ -79,6 +87,8 @@ class Grammar(object):
             self.__isolateTerminals(rule)
         for rule in self.rules:
             self.__binaryize(rule)
+        self.rules=set(self.rules)
+        self.rules = list(self.rules)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
@@ -86,9 +96,9 @@ class Grammar(object):
             for i in range(len(rule.rightHand)):
                 token = rule.rightHand[i]
                 if token.type=="terminal" :
-                    left= Token( type ="terminal_%s"%token.value ) 
+                    left= Token("nonterminal", "U_%s"%token.value ) 
                     right=[Token("terminal","%s"%token.value)]
-                    rule.rightHand[i]=Token(type="terminal_%s"%token.value)
+                    rule.rightHand[i]=Token("nonterminal","U_%s"%token.value)
                     self.rules.append(Rule(left,right) )
 
     def __binaryize(self,rule):        
@@ -99,11 +109,13 @@ class Grammar(object):
             newToks=[]
             handLength=len(rule.rightHand)
             for i in rule.rightHand:
-                newToks.append(Token(type="aux_%s"%i.type) )
+                newToks.append(Token("nonterminal","W_%s"%i.value) )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
             for i in range(1,handLength):
                 self.rules.append(Rule(newToks[i-1],[ newToks[i], oldRight[i] ]) )#beautifull 
+    def __removeEpsilon(self, rule):
+        pass
     def __uniProductionsEleminate(self, rule):
         """eleminate unit productions """
         pass
@@ -150,5 +162,9 @@ def test():
    bnf.bnf2cnf()
    product="%s"%bnf.__str__()
    print "product \n %s"%product
+   "test shortmatch"
+   bnf.shortMatch(Token(value="("))
+
+
 if __name__=='__main__':
     test()

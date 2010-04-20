@@ -6,10 +6,12 @@ def solve():
     source = open("g1.txt",'r')
     G.generate(source)
     G.bnf2cnf()
+    print "grammer==",G
     lexer= BalanceLexer()
     balance=open('balance.txt','r')
     lexer.scanFile(balance)
     S=lexer.getStream()
+    print "stream ===",S
     C=CYKChart()
     C.Build_CYK_Chart(G,S)
     print C
