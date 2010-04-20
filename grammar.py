@@ -62,23 +62,23 @@ class Grammar(object):
          i=0
          while i <len(self):
             rule =self.rules[i]
-            print "test",rule.rightHand, lex1
+            print "long test",rule.rightHand, lex1, lex2
             if rule.rightHand == [lex1,lex2]:
                 print "return",rule.leftHand
                 return rule.leftHand
             i+=1
-         return None
+            #raise error
     def shortMatch(self, lex1):
          """ matches a list of terminals or nonterminal to a nonterminal"""
          i=0
          while i <len(self):
             rule =self.rules[i]
-            print "test",rule.rightHand, lex1
+            print "short test",rule.rightHand, lex1
             if rule.rightHand == [lex1]:
                 print "return",rule.leftHand
                 return rule.leftHand
             i+=1
-         return None
+            #raise error
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
