@@ -59,7 +59,6 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-
          i=0
          while i <len(self):
             rule =self.rules[i]
@@ -151,7 +150,7 @@ class Rule(object):
 
 def test():
    try:
-    source=open('g2.txt','r')
+    source=open('g1.txt','r')
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
