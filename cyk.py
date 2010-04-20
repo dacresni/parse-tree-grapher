@@ -16,8 +16,8 @@ class CYKChart(object):
         for i in range(n):
             chart[i][0]= aGrammar.shortMatch(aString[i])  # append a list with the result of shortMatch(i) if no match, shortMatch should return None
         print "chart",chart
-        for j in range(1,n+1): #range drops the endpoint
-            for i in range((n-j+1)):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
+        for j in range(1,n): #range drops the endpoint
+            for i in range(n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 print i,j
                 #chart[i].append([]) #append the empty set
                 for k in range(j):
