@@ -59,26 +59,26 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-         i=0
-         while i <len(self):
-            rule =self.rules[i]
-            print "long test",rule.rightHand, lex1, lex2
-            if rule.rightHand == [lex1,lex2]:
-                print "return",rule.leftHand
-                return rule.leftHand
-            i+=1
-            #raise error
+        i=0
+        while i <len(self):
+           rule =self.rules[i]
+           print "long test",rule.rightHand, lex1, lex2
+           if rule.rightHand == [lex1,lex2]:
+               print "return",rule.leftHand
+               return rule.leftHand
+           i+=1
+        raise MatchError(lex1,lex2)
     def shortMatch(self, lex1):
-         """ matches a list of terminals or nonterminal to a nonterminal"""
-         i=0
-         while i <len(self):
+        """ matches a list of terminals or nonterminal to a nonterminal"""
+        i=0
+        while i <len(self):
             rule =self.rules[i]
             print "short test",rule.rightHand, lex1
             if rule.rightHand == [lex1]:
                 print "return",rule.leftHand
                 return rule.leftHand
             i+=1
-            #raise error
+        raise MatchError(lex1)
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
@@ -147,6 +147,14 @@ class Rule(object):
             right+="%s"%token
         representation="{ %s ::=%s }"%(self.leftHand,right)
         return representation
+
+class MatchError(Exception):
+    def __init__(self, *args):
+        self.out = []
+        for a in args:
+            self.out.append(a)
+    def __str__(self):
+        return repr(self.out)
 
 def test():
    try:
