@@ -23,8 +23,8 @@ class CYKChart(object):
                 print i,j
                 #chart[i].append([]) #append the empty set
                 for k in range(j):
-                   print "chart i,j ",chart[i][j],chart[i][k],chart[i+k][j-k],
-                   print "result ",aGrammar.longMatch(chart[i][k],chart[i+k][j-k])
+                   print "old" ,i,j,k ,chart[i][j],
+                   print "%s  %s -> %s"%(chart[i][k],chart[i+k][j-k], aGrammar.longMatch(chart[i][k],chart[i+k][j-k]))
                    chart[i][j]=aGrammar.longMatch(chart[i][k],chart[i+k][j-k])
                     #if nothings there, try the chart it MUST be in that order 
                 #done
