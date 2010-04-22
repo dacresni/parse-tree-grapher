@@ -44,25 +44,19 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-         i=0
-         while i <len(self):
-            rule =self.rules[i]
-            print "long test",rule.rightHand, lex1, lex2
+        for rule in self.rules:
+            #print "long test",rule.rightHand, lex1, lex2
             if rule.rightHand == [lex1,lex2]:
-                print "return",rule.leftHand
+                print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
                 return rule.leftHand
-            i+=1
             #raise error
     def shortMatch(self, lex1):
          """ matches a list of terminals or nonterminal to a nonterminal"""
-         i=0
-         while i <len(self):
-            rule =self.rules[i]
-            print "short test",rule.rightHand, lex1
+         for rule in self.rules:
+            #print "short test",rule.rightHand, lex1
             if rule.rightHand == [lex1]:
-                print "return",rule.leftHand
+                print "return %s -> %s"%(rule.leftHand, lex1)
                 return rule.leftHand
-            i+=1
             #raise error
     def __len__(self):
             return len(self.rules)
@@ -81,7 +75,7 @@ class Grammar(object):
                 token = rule.rightHand[i]
                 if token.type=="terminal" :
                     left= Token("nonterminal", "U_%s"%token.value ) 
-                    right=[Token("terminal","%s"%token.value)]
+                    right=[Token("terminal",token.value)]
                     rule.rightHand[i]=Token("nonterminal","U_%s"%token.value)
                     self.rules.append(Rule(left,right) )
 
