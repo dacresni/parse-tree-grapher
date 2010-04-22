@@ -13,18 +13,11 @@ class Grammar(object):
             newrule =Rule(left)
             if breaktok in stack[i:] :
                 firstbreak = stack.index(breaktok,i)
-		#print "breakFound %s"%firstbreak
-                #print "newrule",newrule
-                #print "firstbrek",firstbreak
                 newrule.rightHand.extend(stack[i:firstbreak])
                 self.rules.append(newrule)
                 __findbreaks(stack, firstbreak+1,left)
-                #wehre
             else:
-                #print "no breakes found i=%i"%i
-                #print "equils",stack[i:]
                 newrule.rightHand=stack[i:]
-                #print newrule,"newrule"
                 self.rules.append(newrule)
 
         lex=BnfLexar()
@@ -34,53 +27,43 @@ class Grammar(object):
         stream =lex.tokenStream
         pos = 0
         end = len(stream)
-       #just for testing
-       #print "stream"%stream
         while pos<end:
             stack = []
             delem = Token(value='end') 
             left=stream[pos]
-            print 'delem',delem
-            print 'left',left
-            print 'pos',pos
             if delem in stream[pos:]:
                 stop= stream.index(delem,pos)
-                print 'stop',stop
                 stack.extend(stream[pos:stop])
                 left = stack[0]
                 __findbreaks(stack,2,left)
-                print "stack",stack
             else:
                 stack.extend(stream[pos:])
                 left = stack[0]
                 __findbreaks(stack,2,left)
                 stop=len(stream)
-                print "no delem",stack
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-        i=0
-        while i <len(self):
-           rule =self.rules[i]
-           #print "long test",rule.rightHand, lex1, lex2
-           if rule.rightHand == [lex1,lex2]:
-               print "return",rule.leftHand
-               return rule.leftHand
-           i+=1
-        #raise MatchError(lex1,lex2)
-        return None
-    def shortMatch(self, lex1):
-        """ matches a list of terminals or nonterminal to a nonterminal"""
-        i=0
-        while i <len(self):
+         i=0
+         while i <len(self):
             rule =self.rules[i]
-            #print "short test",rule.rightHand, lex1
+            print "long test",rule.rightHand, lex1, lex2
+            if rule.rightHand == [lex1,lex2]:
+                print "return",rule.leftHand
+                return rule.leftHand
+            i+=1
+            #raise error
+    def shortMatch(self, lex1):
+         """ matches a list of terminals or nonterminal to a nonterminal"""
+         i=0
+         while i <len(self):
+            rule =self.rules[i]
+            print "short test",rule.rightHand, lex1
             if rule.rightHand == [lex1]:
                 print "return",rule.leftHand
                 return rule.leftHand
             i+=1
-        #raise MatchError(lex1)
-        return None
+            #raise error
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
@@ -149,14 +132,6 @@ class Rule(object):
             right+="%s"%token
         representation="{ %s ::=%s }"%(self.leftHand,right)
         return representation
-
-class MatchError(Exception):
-    def __init__(self, *args):
-        self.out = []
-        for a in args:
-            self.out.append(a)
-    def __str__(self):
-        return repr(self.out)
 
 def test():
    try:
