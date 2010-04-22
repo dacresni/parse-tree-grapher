@@ -47,16 +47,18 @@ class Grammar(object):
         for rule in self.rules:
             #print "long test",rule.rightHand, lex1, lex2
             if rule.rightHand == [lex1,lex2]:
-                print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
-                return rule.leftHand
+                left = rule.leftHand
+                print "return %s -> %s %s "%(left , lex1, lex2 )
+                return left
             #raise error
     def shortMatch(self, lex1):
          """ matches a list of terminals or nonterminal to a nonterminal"""
          for rule in self.rules:
             #print "short test",rule.rightHand, lex1
             if rule.rightHand == [lex1]:
-                print "return %s -> %s"%(rule.leftHand, lex1)
-                return rule.leftHand
+                left = rule.leftHand 
+                print "return %s -> %s"%(left , lex1)
+                return left 
             #raise error
     def __len__(self):
             return len(self.rules)
