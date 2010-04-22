@@ -15,7 +15,8 @@ class CYKChart(object):
         print "aGrammar",aGrammar
         for i in range(n):
             #print "chart i,0",chart[i][0],aString[i],aGrammar.shortMatch(aString[i]) 
-            chart[i][0] = aGrammar.shortMatch(aString[i])  
+            print "V %i ,%i = %s -> %s | S %i "%(i,0,aGrammar.shortMatch(aString[i]),aString[i],i)
+            chart[i][0] = aGrammar.shortMatch(aString[i]) 
         print "chart",chart
         for j in range(1,n): #range drops the endpoint
             for i in range(n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
@@ -26,6 +27,7 @@ class CYKChart(object):
                    if chart[i][k] ==None or chart[i+k][j-k] == None :
                     pass
                    else:
+                    print "V %i ,%i = %s -> %s %s | V %i , %i V %i %i"%(i,j,aGrammar.longMatch(chart[i][k],chart[i+k][j-k]), chart[i][k],chart[i+k][j-k],i ,k ,i+k,j-k)
                     chart[i][j]=aGrammar.longMatch(chart[i][k],chart[i+k][j-k])
                     #if nothings there, try the chart it MUST be in that order 
                 #done
