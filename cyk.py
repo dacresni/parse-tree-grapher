@@ -23,14 +23,19 @@ class CYKChart(object):
             for i in range(n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 for k in range(j-1):
                    print i,j,":=",i,k,",",i+k,j-k
-                   self.chart[i][j].update(aGrammar.longMatch(self.chart[i][k],self.chart[i+k][j-k]))
+                   self.chart[i][j].update(aGrammar.setMatchLong(self.chart[i][k],self.chart[i+k][j-k]))
                     #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i
         #end for j
     #end def
     def __repr__(self):
-        return self.chart
+        for i in self.chart:
+            for j in i:
+                for k in j:
+                    print k,
+            print
+
 
     def __str__(self):
         # j as outer loop
