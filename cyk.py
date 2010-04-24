@@ -19,12 +19,11 @@ class CYKChart(object):
             self.chart[i][0] = aGrammar.shortMatch(aString[i])  
             print "After setting...",self.chart[i][0]
         print "chart after len 1 dealt with",self
-        print "ok?"
-        for j in range(1,n): #range drops the endpoint
+        for j in range(n): #range drops the endpoint
             for i in range(n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
-                for k in range(j):
-                   #print i,j
-                    self.chart[i][j]=aGrammar.longMatch(self.chart[i][k],self.chart[i+k][j-k])
+                for k in range(j-1):
+                   print i,j,":=",i,k,",",i+k,j-k
+                   self.chart[i][j]=aGrammar.longMatch(self.chart[i][k],self.chart[i+k][j-k])
                     #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i

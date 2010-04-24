@@ -12,12 +12,9 @@ class Token(object):
     def __eq__(self, other):
         if other == None:
             return False
-        if self.value==None:
-            return (other==None)
         else:
             return (self.type == other.type and self.value == other.value)
-    def __comp__(self, other):
-        return (self.type == other.type and self.value == other.value)
+
 class Scanner(object):
     """ takes a dictionary of regex:function object pairs
         functions should expect match objects as parameters 

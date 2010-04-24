@@ -44,11 +44,17 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-        for rule in self.rules:
-            #print "long test",rule.rightHand, lex1, lex2
-            if rule.rightHand == [lex1,lex2]:
-                #print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
-                return rule.leftHand
+        if lex1 == None:
+            return self.shortMatch(lex2)
+        elif lex2 ==None:
+            return self.shortMatch(lex1)
+        else:
+            for rule in self.rules:
+                #print "long test",rule.rightHand, lex1, lex2
+                if rule.rightHand == [lex1,lex2]:
+                    print "return %s -> %s"%(rule.leftHand, lex1,lex2)
+                    #print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
+                    return rule.leftHand
     def shortMatch(self, lex1):
          """ matches a list of terminals or nonterminal to a nonterminal"""
          for rule in self.rules:
