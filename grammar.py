@@ -44,24 +44,28 @@ class Grammar(object):
             pos=stop+1
 
     def longMatch(self, lex1 ,lex2):
-        if lex1 == None:
-            return self.shortMatch(lex2)
-        elif lex2 ==None:
-            return self.shortMatch(lex1)
-        else:
+        matches = set()
+      # if lex1 == None:
+      #      return self.shortMatch(lex2)
+      #  elif lex2 ==None:
+      #      return self.shortMatch(lex1)
+      #  else:
             for rule in self.rules:
                 #print "long test",rule.rightHand, lex1, lex2
                 if rule.rightHand == [lex1,lex2]:
                     print "return %s -> %s"%(rule.leftHand, lex1,lex2)
                     #print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
-                    return rule.leftHand
+                    matches.add(rule.leftHand)
+        return matches
     def shortMatch(self, lex1):
+        matches=set()
          """ matches a list of terminals or nonterminal to a nonterminal"""
-         for rule in self.rules:
-            #print "short test",rule.rightHand, lex1
-            if rule.rightHand == [lex1]:
-                print "return %s -> %s"%(rule.leftHand, lex1)
-                return rule.leftHand
+        for rule in self.rules:
+           #print "short test",rule.rightHand, lex1
+           if rule.rightHand == [lex1]:
+               print "return %s -> %s"%(rule.leftHand, lex1)
+                   matches.add(rule.leftHand)
+           return matches
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
