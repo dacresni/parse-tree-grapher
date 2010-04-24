@@ -5,8 +5,6 @@ class Token(object):
     def __init__(self,type="terminal", value=None):
         self.type=type
         self.value=value
-    def __len__(self):
-        return len(self.tokenStream)
     def __str__(self):
         return "(%s,%s)"%(self.type, self.value) #yes, None prints None
     def __repr__(self):
@@ -67,6 +65,8 @@ class Scanner(object):
     def setVerbose(self):
         """sets behavior to print out the pattern matched at every match""" 
         self.verbose = True
+    def __len__(self):
+        return len(self.tokenStream)
     def unsetVerbose(self):     
         self.verbose = False
     def __str__(self):

@@ -47,19 +47,15 @@ class Grammar(object):
         for rule in self.rules:
             #print "long test",rule.rightHand, lex1, lex2
             if rule.rightHand == [lex1,lex2]:
-                left = rule.leftHand
-                print "return %s -> %s %s "%(left , lex1, lex2 )
-                return left
-            #raise error
+                #print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
+                return rule.leftHand
     def shortMatch(self, lex1):
          """ matches a list of terminals or nonterminal to a nonterminal"""
          for rule in self.rules:
             #print "short test",rule.rightHand, lex1
             if rule.rightHand == [lex1]:
-                left = rule.leftHand 
-                print "return %s -> %s"%(left , lex1)
-                return left 
-            #raise error
+                print "return %s -> %s"%(rule.leftHand, lex1)
+                return rule.leftHand
     def __len__(self):
             return len(self.rules)
     def bnf2cnf(self):
@@ -112,7 +108,9 @@ class Grammar(object):
         
 class Rule(object):
     """ a rule in a grammar has a left hand side of 1 token and a right hand side of a """
-    def __init__(self, nonterminal ,right=[]):
+    def __init__(self, nonterminal ,right=None):
+        if right is None:
+            right = []
         self.leftHand=nonterminal # a nonterminal token probibly
         self.rightHand=right 
         #perhaps we could shove these into a dict
@@ -125,8 +123,11 @@ class Rule(object):
     def __repr__(self):
         right = ""
         for token in self.rightHand:
-            right+="%s"%token
-        representation="{ %s ::=%s }"%(self.leftHand,right)
+            if token.type== "terminal":
+                right+="' %s '"%token.value
+            else:
+                right+="< %s >"%token.value
+        representation="{< %s > ::= %s }"%(self.leftHand.value,right)
         return representation
 
 def test():
