@@ -8,7 +8,8 @@ def solve():
     G.bnf2cnf()
     print "grammer==",G
     lexer= BalanceLexer()
-    balance=open('balance.txt','r')
+#   balance=open('balance.txt','r')
+    balance=open('easy.txt','r')
     lexer.scanFile(balance)
     S=lexer.getStream()
     print "stream ===",S
