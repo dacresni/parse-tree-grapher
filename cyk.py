@@ -9,26 +9,22 @@ class CYKChart(object):
         self.chart =[]
     def Build_CYK_Chart (self, aGrammar,aString, ) : # a 
         n = len(aString)
-        self.chart= [[""]*n]*n
-        chart= self.chart
+        self.chart= [ [None]*n for _ in range(n)]
+        print "in Build_CYK_Chart"
         print "aString",aString
         print "aGrammar",aGrammar
         for i in range(n):
-            #print "chart i,0",chart[i][0],aString[i],aGrammar.shortMatch(aString[i]) 
-            print "V %i ,%i = %s -> %s | S %i "%(i,0,aGrammar.shortMatch(aString[i]),aString[i],i)
-            chart[i][0] = aGrammar.shortMatch(aString[i]) 
-        print "chart",chart
+            print "i=",i
+            print "DEBUG: chart i,0",aString[i],aGrammar.shortMatch(aString[i]) 
+            self.chart[i][0] = aGrammar.shortMatch(aString[i])  
+            print "After setting...",self.chart[i][0]
+        print "chart after len 1 dealt with",self
+        print "ok?"
         for j in range(1,n): #range drops the endpoint
             for i in range(n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
-                #chart[i].append([]) #append the empty set
                 for k in range(j):
-                   #print "chart i,j ",chart[i][j],chart[i][k],chart[i+k][j-k], aGrammar.longMatch(chart[i][k],chart[i+k][j-k])
                    #print i,j
-                   if chart[i][k] ==None or chart[i+k][j-k] == None :
-                    pass
-                   else:
-                    print "V %i ,%i = %s -> %s %s | V %i , %i V %i %i"%(i,j,aGrammar.longMatch(chart[i][k],chart[i+k][j-k]), chart[i][k],chart[i+k][j-k],i ,k ,i+k,j-k)
-                    chart[i][j]=aGrammar.longMatch(chart[i][k],chart[i+k][j-k])
+                    self.chart[i][j]=aGrammar.longMatch(self.chart[i][k],self.chart[i+k][j-k])
                     #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i
@@ -38,6 +34,8 @@ class CYKChart(object):
         return self.chart
 
     def __str__(self):
+        # j as outer loop
+        # i as inner loop, up to n-j+1?
         return "%s"%self.chart
 
 
