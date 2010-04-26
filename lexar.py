@@ -14,6 +14,8 @@ class Token(object):
             return False
         else:
             return (self.type == other.type and self.value == other.value)
+    def __hash__(self): 
+        return hash("%s"%self)
 
 class Scanner(object):
     """ takes a dictionary of regex:function object pairs
