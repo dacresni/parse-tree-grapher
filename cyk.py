@@ -39,7 +39,7 @@ class CYKChart(object):
 
     def __str__(self):
          rep = ""
-         for i in range(len(self.chart)):
+         for i in range(len(self.chart[0])):
             for j in range(len(self.chart[i])):
                 rep+="%i,%i,%s"%(j,i,self.chart[i][j])
             rep+="\n"

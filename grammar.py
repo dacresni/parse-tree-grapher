@@ -52,7 +52,7 @@ class Grammar(object):
             for rule in self.rules:
                 #print "long test",rule.rightHand, lex1, lex2
                 if rule.rightHand == [lex1,lex2]:
-                    print "return %s -> %s"%(rule.leftHand, lex1,lex2)
+                    print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
                     #print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
                     return rule.leftHand
     def shortMatch(self, lex1):
