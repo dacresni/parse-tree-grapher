@@ -6,14 +6,19 @@ class Token(object):
         self.type=type
         self.value=value
     def __str__(self):
-        return "(%s,%s)"%(self.type, self.value) #yes, None prints None
+        return "(%s , %s )"%(self.type,self.value)
     def __repr__(self):
-        return "(%s,%s)"%(self.type, self.value) #yes, None prints None
+        if self.type=="terminal":
+            return "'%s'"%self.value
+        else:
+            return "<%s>"%self.value
     def __eq__(self, other):
         if other == None:
             return False
         else:
             return (self.type == other.type and self.value == other.value)
+    def __hash__(self): 
+        return hash("%s"%self)
 
 class Scanner(object):
     """ takes a dictionary of regex:function object pairs
@@ -81,8 +86,9 @@ def test():
        lex.scanFile(source)
        stream =lex.tokenStream
        print "stream==%s"%stream
-       token = Token("token")
+       token = Token("token","value")
        print token
+       print repr(token)
        print "token created sucessfully"
 if __name__ == '__main__':
     test() 

@@ -135,6 +135,8 @@ class Rule(object):
             right+="%s"%token
         representation="{ %s ::=%s }"%(self.leftHand,right)
         return representation
+    def __hash__(self):
+        return hash("%s"%self)
     def __repr__(self):
         right = ""
         for token in self.rightHand:

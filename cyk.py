@@ -16,31 +16,33 @@ class CYKChart(object):
         for i in range(n):
             print "i=",i
             print "DEBUG: chart i,0",aString[i],aGrammar.shortMatch(aString[i]) 
-            self.chart[i][0]=aGrammar.shortMatch(aString[i])
+            self.chart[0][i]=aGrammar.shortMatch(aString[i])
             print "After setting...",self.chart[i][0]
         print "chart after len 1 dealt with",self
-        for j in range(n): #range drops the endpoint
+        for j in range(1,n): #range drops the endpoint
             for i in range(n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 for k in range(j-1):
-                   print i,j,":=",i,k,",",i+k,j-k
+                   #print i,j,":=",i,k,",",i+k,j-k
                    self.chart[i][j].update(aGrammar.setMatchLong(self.chart[i][k],self.chart[i+k][j-k]))
-                   print self.chart
+        #print self
                     #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i
         #end for j
     #end def
     def __repr__(self):
-        for i in self.chart:
-            for j in i:
-                for k in j:
-                    print k,
-            print
+        for i in range(len(self.chart[0])):
+            for j in range(len(i)):
+                for k in range(len(j)):
+                    print k,j,i
 
 
     def __str__(self):
-        # j as outer loop
-        # i as inner loop, up to n-j+1?
-        return "%s"%self.chart
+         rep = ""
+         for i in range(len(self.chart)):
+            for j in range(len(self.chart[i])):
+                rep+="%i,%i,%s"%(j,i,self.chart[i][j])
+            rep+="\n"
+         return rep
 
 
