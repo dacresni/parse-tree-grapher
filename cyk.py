@@ -16,9 +16,9 @@ class CYKChart(object):
         for i in range(n):
             print "i=",i
             print "DEBUG: chart i,0",aString[i],aGrammar.shortMatch(aString[i]) 
-            self.chart[0][i]=aGrammar.shortMatch(aString[i])
-            print "After setting...",self.chart[i][0]
-        print "chart after len 1 dealt with",self
+            self.chart[i][0]=aGrammar.shortMatch(aString[i])
+            print "After setting...",self.chart[i][0] 
+        print "chart after len 1 dealt with\n",self
         for j in range(1,n): #range drops the endpoint
             for i in range(n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 for k in range(j-1):
