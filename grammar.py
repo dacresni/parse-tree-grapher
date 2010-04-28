@@ -147,9 +147,9 @@ class Rule(object):
         representation="{< %s > ::= %s }"%(self.leftHand.value,right)
         return representation
 
-def test():
+def test(filename="g1.txt"):
    try:
-    source=open('g1.txt','r')
+    source=open(filename,'r')
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
@@ -165,4 +165,9 @@ def test():
 
 
 if __name__=='__main__':
-    test()
+    import sys
+    if len(sys.argv)>1:
+        test(sys.argv[1])
+        print "calling with",sys.argv[1]
+    else:
+        test()
