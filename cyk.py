@@ -24,6 +24,7 @@ class CYKChart(object):
                 for k in range(j-1):
                    print i,j,":=",i,k,",",i+k,j-k
                    self.chart[i][j].update(aGrammar.setMatchLong(self.chart[i][k],self.chart[i+k][j-k]))
+                   print self.chart
                     #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i
