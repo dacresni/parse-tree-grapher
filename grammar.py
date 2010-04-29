@@ -52,7 +52,7 @@ class Grammar(object):
             for rule in self.rules:
                 #print "long test",rule.rightHand, lex1, lex2
                 if rule.rightHand == [lex1,lex2]:
-                    print "return %s -> %s"%(rule.leftHand, lex1,lex2)
+                    print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
                     #print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
                     return rule.leftHand
     def shortMatch(self, lex1):
@@ -64,12 +64,19 @@ class Grammar(object):
                print "return %s -> %s"%(rule.leftHand, lex1)
                matches.add(rule.leftHand)
         return matches 
-         
+    def setMatchShort(self,set):
+        for lex in set:
+            return self.shortMatch(lex)
     def setMatchLong(self, set1, set2):
         matches=set()
-        for item1 in set1:
-            for item2 in set2:
-                matches.add(self.longMatch(item1,item2))# ordanance does matter
+        if len(set1)==0:
+            return self.setMatchShort(set2) 
+        elif len(set2 )==0:
+            return self.setMatchShort(set1 )
+        else:
+            for item1 in set1:
+                for item2 in set2:
+                    matches.add(self.longMatch(item1,item2))# ordanance does matter
         return matches
     def __len__(self):
             return len(self.rules)
@@ -147,9 +154,9 @@ class Rule(object):
         representation="{< %s > ::= %s }"%(self.leftHand.value,right)
         return representation
 
-def test():
+def test(filename="g1.txt"):
    try:
-    source=open('g1.txt','r')
+    source=open(filename,'r')
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
@@ -165,4 +172,9 @@ def test():
 
 
 if __name__=='__main__':
-    test()
+    import sys
+    if len(sys.argv)>1:
+        test(sys.argv[1])
+        print "calling with",sys.argv[1]
+    else:
+        test()
