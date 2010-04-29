@@ -64,12 +64,19 @@ class Grammar(object):
                print "return %s -> %s"%(rule.leftHand, lex1)
                matches.add(rule.leftHand)
         return matches 
-         
+    def setMatchShort(self,set):
+        for lex in set:
+            return self.shortMatch(lex)
     def setMatchLong(self, set1, set2):
         matches=set()
-        for item1 in set1:
-            for item2 in set2:
-                matches.add(self.longMatch(item1,item2))# ordanance does matter
+        if len(set1)==0:
+            return self.setMatchShort(set2) 
+        elif len(set2 )==0:
+            return self.setMatchShort(set1 )
+        else:
+            for item1 in set1:
+                for item2 in set2:
+                    matches.add(self.longMatch(item1,item2))# ordanance does matter
         return matches
     def __len__(self):
             return len(self.rules)
