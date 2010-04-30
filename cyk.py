@@ -23,8 +23,8 @@ class CYKChart(object):
         for j in range(2,n): #range drops the endpoint
             for i in range(1,n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 for k in range(1,j-1):
-                   print i,j,":=",i,k,",",self.chart[i][k],self.chart[i+k][j-k]
-                   matches=aGrammar.setMatchLong(self.chart[i][k],self.chart[i+k][j-k])
+                   print i,j,":=",i,k,",",self.chart[i][k],self.chart[i+k+1][j-k-1]
+                   matches=aGrammar.setMatchLong(self.chart[i][k],self.chart[i+k+1][j-k-1])
                    self.chart[i][j].update(matches)
         #print self
                     #if nothings there, try the chart it MUST be in that order 
@@ -46,3 +46,30 @@ class CYKChart(object):
                rep+="%i,%i,%s"%(i,j,self.chart[i][j])
            rep+="\n"
         return rep
+
+
+
+def test(string='balance.txt', spec='g1.txt'):
+    G = Grammar()
+    source = open(spec,'r')
+    #source = open("metabnf",'r')
+    G.generate(source)
+    G.bnf2cnf()
+    print "grammer==",G
+    lexer= BalanceLexer()
+    balance=open(string,'r')
+#    balance=open('metabnf','r')
+    lexer.scanFile(balance)
+    S=lexer.getStream()
+    print "stream ===",S
+    C=CYKChart()
+    C.Build_CYK_Chart(G,S)
+    print C
+
+if __name__ == '__main__' :
+    import sys
+    if len(sys.argv)>1:
+        test(sys.argv[1], sys.argv[2])
+    else:
+        print "usage: %s file specfile"%sys.arg[0]
+
