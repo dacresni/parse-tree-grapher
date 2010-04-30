@@ -1,8 +1,10 @@
 def loop(n):
-    for j in range(1,n): #range drops the endpoint
-        for i in range(n-j):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
-            for k in range(j):
-                print i,j,":=",i,k,",",i+k,j-k
+    for j in range(2,n): #range drops the endpoint
+        for i in range(1,n-j+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
+            for k in range(1,j-1):
+               print i,j,":=",i,k,","
+
+
 if __name__=='__main__':
     import sys
     if (len(sys.argv)>1):

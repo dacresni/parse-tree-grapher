@@ -42,6 +42,15 @@ class Grammar(object):
                 __findbreaks(stack,2,left)
                 stop=len(stream)
             pos=stop+1
+    def singleMatch(self, lex):
+        """ matches a list of terminals or nonterminal to a nonterminal"""
+        matches = set()
+        for rule in self.rules:
+           #print "short test",rule.rightHand, set1
+           if rule.rightHand == [lex]:
+               print "return %s -> %s"%(rule.leftHand, lex)
+               matches.add(rule.leftHand)
+        return matches 
 
     def longMatch(self, lex1 ,lex2):
         if lex1 == None:
@@ -54,25 +63,27 @@ class Grammar(object):
                 if rule.rightHand == [lex1,lex2]:
                     print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
                     #print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
-                    return rule.leftHand
-    def shortMatch(self, lex1):
-        """ matches a list of terminals or nonterminal to a nonterminal"""
+    def shortMatch(self, set1):
         matches=set()
         for rule in self.rules:
-           #print "short test",rule.rightHand, lex1
-           if rule.rightHand == [lex1]:
-               print "return %s -> %s"%(rule.leftHand, lex1)
+           #print "short test",rule.rightHand, set1
+           if rule.rightHand == [set1]:
+               print "return %s -> %s"%(rule.leftHand, set1)
                matches.add(rule.leftHand)
-        return matches 
-    def setMatchShort(self,set):
-        for lex in set:
-            return self.shortMatch(lex)
+        return matches
+
+    def setMatchShort(self,set1):
+        matches=set()
+        if len(set1)!=0:
+            for lex in set1:
+                matches.update(self.shortMatch(lex))
+        return matches
     def setMatchLong(self, set1, set2):
         matches=set()
         if len(set1)==0:
             return self.setMatchShort(set2) 
         elif len(set2 )==0:
-            return self.setMatchShort(set1 )
+            return self.setMatchShort(set1)
         else:
             for item1 in set1:
                 for item2 in set2:
