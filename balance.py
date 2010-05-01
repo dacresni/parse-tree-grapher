@@ -17,7 +17,6 @@ if __name__=='__main__':
 # note, it won't import this grammar correctly
     readscann=BalanceLexer()
     readscann.setVerbose()
-    print "end of verbose"
     try:
         source= open('g1.txt','r')
     except IOError:
@@ -27,5 +26,6 @@ if __name__=='__main__':
     except IOError:
         print 'balance not found'
     readscann.scanFile(balance)
+    print "end of verbose"
     print readscann.tokenStream
     print "BnfLexar importedsucessfully"

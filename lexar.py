@@ -9,9 +9,9 @@ class Token(object):
         return "(%s , %s )"%(self.type,self.value)
     def __repr__(self):
         if self.type=="terminal":
-            return "'%s'"%self.value
+            return "' %s '"%self.value
         else:
-            return "<%s>"%self.value
+            return "< %s >"%self.value
     def __eq__(self, other):
         if other == None:
             return False

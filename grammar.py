@@ -150,21 +150,15 @@ class Rule(object):
     def __str__(self):
         right = ""
         for token in self.rightHand:
-            right+="%s"%token
-        representation="{ %s ::=%s }"%(self.leftHand,right)
-        return representation
-    def __hash__(self):
-        return hash("%s"%self)
-    def __repr__(self):
-        right = ""
-        for token in self.rightHand:
             if token.type== "terminal":
                 right+="' %s '"%token.value
             else:
                 right+="< %s >"%token.value
-        representation="{< %s > ::= %s }"%(self.leftHand.value,right)
+        representation="{< %s > ::= %s }"%(self.leftHand,right)
         return representation
-
+    def __hash__(self):
+        return hash("%s"%self)
+ 
 def test(filename="g1.txt"):
    try:
     source=open(filename,'r')

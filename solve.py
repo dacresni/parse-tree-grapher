@@ -4,12 +4,13 @@ from balance import BalanceLexer
 def solve():
     G = Grammar()
     source = open("g1.txt",'r')
+    #source = open("metabnf",'r')
     G.generate(source)
     G.bnf2cnf()
     print "grammer==",G
     lexer= BalanceLexer()
-#   balance=open('balance.txt','r')
-    balance=open('easy.txt','r')
+    balance=open('balance.txt','r')
+#    balance=open('metabnf','r')
     lexer.scanFile(balance)
     S=lexer.getStream()
     print "stream ===",S
