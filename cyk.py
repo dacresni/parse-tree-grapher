@@ -21,19 +21,21 @@ class CYKChart(object):
             self.chart[i][1]=aGrammar.singleMatch(aString[i-1])
             #print "After setting...",self.chart[i][1] 
         print "chart after len 1 dealt with\n",self
-        h=2
-        w=1
-        k=1
+        h='a'
+        w='a'
+        k='a'
         for w in range(2,n): #range drops the endpoint
             print h,w,k,"w"
-            for h in range(1,n-w+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
+            for h in range(1,n-w+1+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 print h,w,k,"h"
-                for k in range(1,w-1):
+                for k in range(1,w-1+1):
                    print h,w,k,"k"
-                   set1=self.chart[k][w]
+                   print h,w,":=",
+                   print "[%i,%i]%s"%(h,k,self.chart[h][w]),
+                   print "[%i,%i]%s"%(h+k,w-k,self.chart[h+k][w-k])
+                   set1=self.chart[h][k]
                    set2=self.chart[h+k][w-k]
                    #matches=aGrammar.setMatchLong(self.chart[h][k],self.chart[h+k][w-k])
-                   print h,w,":=","[%i,%i]%s"%(k,w,self.chart[k][w]),"[%i,%i]%s"%(h+k,w-k,self.chart[h+k][w-k])
                    matches=aGrammar.setMatchLong(set1,set2)
                    self.chart[h][w].update(matches)
         print self
