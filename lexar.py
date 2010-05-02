@@ -8,10 +8,8 @@ class Token(object):
     def __str__(self):
         return "(%s , %s )"%(self.type,self.value)
     def __repr__(self):
-        if self.type=="terminal":
-            return "' %s '"%self.value
-        else:
-            return "< %s >"%self.value
+        return self.value
+
     def __eq__(self, other):
         if other == None:
             return False

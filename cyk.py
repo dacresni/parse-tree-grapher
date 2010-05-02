@@ -14,19 +14,29 @@ class CYKChart(object):
         print "in Build_CYK_Chart"
         print "aString",aString
         print "aGrammar",aGrammar
+        print self
         for i in range(1,n):
-            print "i=",i
-            print "DEBUG: chart ",i-1,aString[i-1],aGrammar.singleMatch(aString[i-1]) 
-            self.chart[i-1][1]=aGrammar.singleMatch(aString[i-1])
-            print "After setting...",self.chart[i][1] 
+            #print "i=",i
+            #print "DEBUG: chart ",i,aString[i-1],aGrammar.singleMatch(aString[i-1]) 
+            self.chart[i][1]=aGrammar.singleMatch(aString[i-1])
+            #print "After setting...",self.chart[i][1] 
         print "chart after len 1 dealt with\n",self
-        for i in range(2,n): #range drops the endpoint
-            for j in range(n-i+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
-                for k in range(i-1):
-                   print j,k,":=","[%i,%i]%s"%(j,k,self.chart[j][k]),"[%i,%i]%s"%(j+k+1,i-k,self.chart[j+k][i-k])
-                   matches=aGrammar.setMatchLong(self.chart[j][k],self.chart[j+k][i-k])
-                   self.chart[j][i].update(matches)
-        #print self
+        h=2
+        w=1
+        k=1
+        for w in range(2,n): #range drops the endpoint
+            print h,w,k,"w"
+            for h in range(1,n-w+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
+                print h,w,k,"h"
+                for k in range(1,w-1):
+                   print h,w,k,"k"
+                   set1=self.chart[k][w]
+                   set2=self.chart[h+k][w-k]
+                   #matches=aGrammar.setMatchLong(self.chart[h][k],self.chart[h+k][w-k])
+                   print h,w,":=","[%i,%i]%s"%(k,w,self.chart[k][w]),"[%i,%i]%s"%(h+k,w-k,self.chart[h+k][w-k])
+                   matches=aGrammar.setMatchLong(set1,set2)
+                   self.chart[h][w].update(matches)
+        print self
                     #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i
@@ -34,15 +44,15 @@ class CYKChart(object):
    #end def
     def __repr__(self):
         rep = ""
-        for i in range(1,len(self.chart[0])):
-           for j in range(1,len(self.chart[0])):
+        for i in range(len(self.chart[0])):
+           for j in range(len(self.chart[0])):
                rep+="%i,%i,%s"%(i,j,self.chart[i][j])
            rep+="\n"
 
     def __str__(self):
         rep = ""
-        for i in range(1,len(self.chart[0])):
-           for j in range(1,len(self.chart[0])):
+        for i in range(len(self.chart[0])):
+           for j in range(len(self.chart[0])):
                rep+="%i,%i,%s"%(i,j,self.chart[i][j])
            rep+="\n"
         return rep

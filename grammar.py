@@ -5,6 +5,7 @@ class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
         self.rules=[]
+        self.cnf = set()
         #self.startSymbole
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
@@ -46,23 +47,20 @@ class Grammar(object):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         matches = set()
         for rule in self.rules:
-           #print "short test",rule.rightHand, set1
+           #print "short test",rule.rightHand,lex
            if rule.rightHand == [lex]:
-               print "return %s -> %s"%(rule.leftHand, lex)
+               #print "return %s -> %s"%(rule.leftHand, lex)
                matches.add(rule.leftHand)
         return matches 
 
     def longMatch(self, lex1 ,lex2):
-        if lex1 == None:
-            return self.shortMatch(lex2)
-        elif lex2 ==None:
-            return self.shortMatch(lex1)
-        else:
-            for rule in self.rules:
-                #print "long test",rule.rightHand, lex1, lex2
-                if rule.rightHand == [lex1,lex2]:
-                    print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
-                    #print "return %s -> %s %s "%(rule.leftHand, lex1, lex2 )
+        matches = set()
+        for rule in self.rules:
+            print "long test",rule.rightHand, lex1, lex2
+            if rule.rightHand == [lex1,lex2]:
+                print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
+                matches.add(rule.leftHand)
+        return matches 
     def shortMatch(self, set1):
         matches=set()
         for rule in self.rules:
@@ -87,7 +85,7 @@ class Grammar(object):
         else:
             for item1 in set1:
                 for item2 in set2:
-                    matches.add(self.longMatch(item1,item2))# ordanance does matter
+                    matches.update(self.longMatch(item1,item2))# ordanance does matter
         return matches
     def __len__(self):
             return len(self.rules)
@@ -96,8 +94,7 @@ class Grammar(object):
             self.__isolateTerminals(rule)
         for rule in self.rules:
             self.__binaryize(rule)
-        self.rules=set(self.rules)
-        self.rules = list(self.rules)
+        self.cnf=set(self.rules)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
@@ -135,9 +132,14 @@ class Grammar(object):
         return "%s"%rep
     def __repr__(self):
         rep=[]
-        for i in self.rules:
-            rep.append("%s"%i)
-        return "%s"%rep
+        if len(self.cnf) == 0:
+            for i in self.rules:
+                rep.append("%s"%i)
+            return "%s"%rep
+        else:
+            for i in self.cnf:
+                rep.append("%s"%i)
+            return "%s"%rep
         
 class Rule(object):
     """ a rule in a grammar has a left hand side of 1 token and a right hand side of a """
@@ -150,11 +152,8 @@ class Rule(object):
     def __str__(self):
         right = ""
         for token in self.rightHand:
-            if token.type== "terminal":
-                right+="' %s '"%token.value
-            else:
-                right+="< %s >"%token.value
-        representation="{< %s > ::= %s }"%(self.leftHand,right)
+                right+=" %s "%token.value
+        representation="{ %s ::= %s }"%(self.leftHand.value,right)
         return representation
     def __hash__(self):
         return hash("%s"%self)
@@ -165,21 +164,18 @@ def test(filename="g1.txt"):
    except IOError:
     print "metabnf not found"
    bnf=Grammar()
-   
    bnf.generate(source,True)
-   print "oldgrammar" 
+   print "oldgrammar",
    print bnf
    bnf.bnf2cnf()
-   product="%s"%bnf.__str__()
-   print "product \n %s"%product
-   "test shortmatch"
-   bnf.shortMatch(Token(value="("))
+   print "product"
+   print bnf
 
 
 if __name__=='__main__':
     import sys
     if len(sys.argv)>1:
-        test(sys.argv[1])
         print "calling with",sys.argv[1]
+        test(sys.argv[1])
     else:
         test()

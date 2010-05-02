@@ -5,7 +5,7 @@
 <VP> ::= <V> <NP> ;
 <VP> ::= <VP> <PP> ;
 <DET> ::= "the" ;
-<NP> ::="I" ;
+<NP> ::= "I" ;
 <N> ::= "man" ;
 <N> ::= "telescope" ;
 <P> ::= "with" ;
