@@ -53,8 +53,8 @@ class CYKChart(object):
 
     def __str__(self):
         rep = ""
-        for i in range(len(self.chart[0])):
-           for j in range(len(self.chart[0])):
+        for i in range(1,len(self.chart[0])):
+           for j in range(1,len(self.chart[0])):
                rep+="%i,%i,%s"%(i,j,self.chart[i][j])
            rep+="\n"
         return rep
@@ -83,5 +83,5 @@ if __name__ == '__main__' :
     if len(sys.argv)>1:
         test(sys.argv[1], sys.argv[2])
     else:
-        print "usage: %s file specfile"%sys.arg[0]
+        print "usage: %s file specfile"%sys.argv[0]
 
