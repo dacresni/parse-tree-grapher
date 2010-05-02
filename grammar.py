@@ -56,7 +56,7 @@ class Grammar(object):
     def longMatch(self, lex1 ,lex2):
         matches = set()
         for rule in self.rules:
-            print "long test",rule.rightHand, lex1, lex2
+            #print "long test",rule.rightHand, lex1, lex2
             if rule.rightHand == [lex1,lex2]:
                 print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
                 matches.add(rule.leftHand)

@@ -9,7 +9,7 @@ class CYKChart(object):
         self.chart =[]
         #self.chart= [ [set() for _ in range(n)] for _ in range(n)]
     def Build_CYK_Chart (self, aGrammar,aString ) : # a 
-        n = len(aString) +1
+        n = len(aString)+1
         self.chart= [ [set() for _ in range(n)] for _ in range(n)]
         print "in Build_CYK_Chart"
         print "aString",aString
@@ -26,7 +26,7 @@ class CYKChart(object):
         k='a'
         for w in range(2,n): #range drops the endpoint
             print h,w,k,"w"
-            for h in range(1,n-w+1+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
+            for h in range(1,n-w+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 print h,w,k,"h"
                 for k in range(1,w-1+1):
                    print h,w,k,"k"
