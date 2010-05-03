@@ -7,10 +7,13 @@ def genDot(C,filename=None):
     specFile=""
     for key in C.graph.keys():
         for i in C.graph[key]:
-            specFile+='    "%s" -> "%s" ; \n'%(key,i)
+            lable=C.chart[i[0]][i[1]]
+            if len(lable)!=0:
+                specFile+='    "%s" -> "%s" ; \n'%(key,i)
     for key in C.graph.keys():
         lable=C.chart[key[0]][key[1]]
-        specFile+='    "%s"[lable = "%s"] ;\n'%(key,lable )
+        if len(lable)!=0:
+            specFile+='    "%s"[label = "%s"] ;\n'%(key,lable )
     finalFile=open(filename,'w')
     finalFile.write("digraph G { \n")
     finalFile.write(specFile)
