@@ -3,7 +3,7 @@
 import re
 class Token(object):
     def __init__(self,type="terminal", value=None):
-        self.type=type
+        self.type=type #terminals should really be classifyable
         self.value=value
     def __str__(self):
         return "(%s , %s )"%(self.type,self.value)
