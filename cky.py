@@ -15,6 +15,7 @@ def solve():
     print "stream ===",S
     C=CYKChart()
     C.Build_CYK_Chart(G,S)
+    print C
     genDot(C)
  
 if __name__=='__main__':
