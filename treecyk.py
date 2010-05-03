@@ -4,9 +4,10 @@ from lexar import Token
 from grammar import Grammar
 from bnflexar import BnfLexar
 class CYKTree(object):
-    def __init__(self,left,right,value):
+    def __init__(self,here,left,right):
         self.left=left
         self.right=right
+        self.here=here
 class CYKChart(object):
     def __init__(self):
         self.chart =[]
@@ -43,10 +44,10 @@ class CYKChart(object):
                    set1=self.chart[h][k]
                    set2=self.chart[h+k][w-k]
                    #matches=aGrammar.setMatchLong(self.chart[h][k],self.chart[h+k][w-k])
-                   matches=aGrammar.setMatchLong(set1,set2
+                   matches=aGrammar.setMatchLong(set1,set2)
                    self.chart[h][w].update(matches)
-                   self.graph[h][w].append(CYKTree((h,k),(h+k,w-k ) ))
-        print self
+                   self.graph[h][w].append(CYKTree((h,w),(h,k),(h+k,w-k))) # coordinates of where i go and the lines
+        print self.graph
                     #if nothings there, try the chart it MUST be in that order 
                 #done
             #end for i
