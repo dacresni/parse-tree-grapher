@@ -1,7 +1,7 @@
 from grammar import Grammar
-from cyk import CYKChart
+from treecyk import CYKChart
 from telescope import Telescope
- 
+from graphviz import genDot
 def solve():
     G = Grammar()
     source = open("cky.txt",'r')
@@ -15,6 +15,7 @@ def solve():
     print "stream ===",S
     C=CYKChart()
     C.Build_CYK_Chart(G,S)
+    genDot(C)
  
 if __name__=='__main__':
     solve()

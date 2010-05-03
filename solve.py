@@ -1,6 +1,7 @@
 from grammar import Grammar
-from cyk import CYKChart
+from treecyk import CYKChart
 from balance import BalanceLexer
+from graphviz import genDot
 def solve():
     G = Grammar()
     source = open("g1.txt",'r')
@@ -17,5 +18,8 @@ def solve():
     C=CYKChart()
     C.Build_CYK_Chart(G,S)
     print C
+    print C.graph
+    genDot(C,"testfile.dot")
+
 if __name__ == '__main__':
     solve()

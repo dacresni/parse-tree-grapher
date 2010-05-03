@@ -3,22 +3,18 @@ import sys
 from lexar import Token
 from grammar import Grammar
 from bnflexar import BnfLexar
-class CYKTree(object):
-    def __init__(self,here,left,right):
-        self.left=left
-        self.right=right
-        self.here=here
+
 class CYKChart(object):
     def __init__(self):
         self.chart =[]
         self.size=0
-        self.graph=[]
+        self.graph={}
         #self.chart= [ [set() for _ in range(n)] for _ in range(n)]
     def Build_CYK_Chart (self, aGrammar,aString ) : # a 
         n = len(aString)+1
         self.size=n
         self.chart= [ [set() for _ in range(n)] for _ in range(n)]
-        self.graph= [ [[] for _ in range(n)] for _ in range(n)] #lists are mutable
+        #self.graph= [ [[] for _ in range(n)] for _ in range(n)] #lists are mutable
         print "in Build_CYK_Chart"
         print "aString",aString
         print "aGrammar",aGrammar
@@ -46,7 +42,9 @@ class CYKChart(object):
                    #matches=aGrammar.setMatchLong(self.chart[h][k],self.chart[h+k][w-k])
                    matches=aGrammar.setMatchLong(set1,set2)
                    self.chart[h][w].update(matches)
-                   self.graph[h][w].append(CYKTree((h,w),(h,k),(h+k,w-k))) # coordinates of where i go and the lines
+                   #self.graph[h][w].append(CYKTree((h,w),(h,k),(h+k,w-k))) # coordinates of where i go and the lines
+                   theKey=(h,w)
+                   self.graph.setdefault(theKey,[]).extend([(h,k),(h+k,w-k)])
         print self.graph
                     #if nothings there, try the chart it MUST be in that order 
                 #done
