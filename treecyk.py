@@ -44,7 +44,9 @@ class CYKChart(object):
                    self.chart[h][w].update(matches)
                    #self.graph[h][w].append(CYKTree((h,w),(h,k),(h+k,w-k))) # coordinates of where i go and the lines
                    theKey=(h,w)
-                   self.graph.setdefault(theKey,[]).extend([(h,k),(h+k,w-k)])
+                   if len(matches )!=0:
+                       self.graph.setdefault(theKey,[]).extend([(h,k),(h+k,w-k)])
+
         print self.graph
                     #if nothings there, try the chart it MUST be in that order 
                 #done

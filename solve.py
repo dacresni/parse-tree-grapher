@@ -1,7 +1,7 @@
 from grammar import Grammar
 from treecyk import CYKChart
 from balance import BalanceLexer
-from graphviz import genDot
+from viz import genDot
 def solve():
     G = Grammar()
     source = open("g1.txt",'r')
@@ -10,8 +10,8 @@ def solve():
     G.bnf2cnf()
     print "grammer==",G
     lexer= BalanceLexer()
-    balance=open('easy.txt','r')
-#    balance=open('metabnf','r')
+#    balance=open('easy.txt','r')
+    balance=open('balance.txt','r')
     lexer.scanFile(balance)
     S=lexer.getStream()
     print "stream ===",S

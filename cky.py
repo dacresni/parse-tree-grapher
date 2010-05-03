@@ -1,7 +1,7 @@
 from grammar import Grammar
 from treecyk import CYKChart
 from telescope import Telescope
-from graphviz import genDot
+from viz import genDot
 def solve():
     G = Grammar()
     source = open("cky.txt",'r')
