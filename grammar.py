@@ -118,7 +118,7 @@ class Grammar(object):
                 newToks.append(Token("nonterminal","W_%s"%i.value) )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
-            for i in range(1,handLength):
+            for i in range(1,handLength-1):
                 self.rules.append(Rule(newToks[i-1],[ newToks[i], oldRight[i] ]) )#beautifull 
     def __removeEpsilon(self, rule):
         pass
