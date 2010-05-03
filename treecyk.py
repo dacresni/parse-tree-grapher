@@ -8,11 +8,13 @@ class CYKChart(object):
     def __init__(self):
         self.chart =[]
         self.size=0
+        self.string=""
         self.graph={}
         #self.chart= [ [set() for _ in range(n)] for _ in range(n)]
     def Build_CYK_Chart (self, aGrammar,aString ) : # a 
         n = len(aString)+1
         self.size=n
+        self.string=aString
         self.chart= [ [set() for _ in range(n)] for _ in range(n)]
         #self.graph= [ [[] for _ in range(n)] for _ in range(n)] #lists are mutable
         print "in Build_CYK_Chart"
