@@ -5,7 +5,8 @@ class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
         self.rules=[]
-        self.cnf = set(self.rules   )
+        #self.cnf = set(self.rules  )
+        self.cnf = set()
         #self.startSymbole
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
@@ -46,7 +47,7 @@ class Grammar(object):
     def singleMatch(self, lex):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         matches = set()
-        for rule in self.rules:
+        for rule in self.cnf:
            #print "short test",rule.rightHand,lex
            if rule.rightHand == [lex]:
                #print "return %s -> %s"%(rule.leftHand, lex)
@@ -55,15 +56,15 @@ class Grammar(object):
 
     def longMatch(self, lex1 ,lex2):
         matches = set()
-        for rule in self.rules:
+        for rule in self.cnf:
             #print "long test",rule.rightHand, lex1, lex2
             if rule.rightHand == [lex1,lex2]:
-                print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
+                #print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
                 matches.add(rule.leftHand)
         return matches 
     def shortMatch(self, set1):
         matches=set()
-        for rule in self.rules:
+        for rule in self.cnf:
            #print "short test",rule.rightHand, set1
            if rule.rightHand == [set1]:
                print "return %s -> %s"%(rule.leftHand, set1)
@@ -88,14 +89,14 @@ class Grammar(object):
                     matches.update(self.longMatch(item1,item2))# ordanance does matter
         return matches
     def __len__(self):
-            return len(self.rules)
+            return len(self.cnf)
     def bnf2cnf(self):
         for rule in self.rules:
             self.__isolateTerminals(rule)
         for rule in self.rules:
             self.__binaryize(rule)
         self.cnf=set(self.rules)
-        self.rules=list(self.cnf)
+        self.rules=self.cnf
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
@@ -108,6 +109,7 @@ class Grammar(object):
                     rule.rightHand[i]=Token("nonterminal","U_%s"%token.value)
                     self.rules.append(Rule(left,right) )
 
+
     def __binaryize(self,rule):        
         #step 2 make binary
         if len(rule.rightHand)> 2 :
@@ -115,7 +117,8 @@ class Grammar(object):
             #we can do this recursively
             newToks=[]
             handLength=len(rule.rightHand)
-            for i in rule.rightHand:
+            for t in range(handLength):
+                i=rule.rightHand[t]
                 newToks.append(Token("nonterminal","W_%s"%i.value) )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
@@ -127,20 +130,15 @@ class Grammar(object):
         """eleminate unit productions """
         pass
     def __str__(self):
-        rep=[]
+        rep=""
         for i in self.cnf:
-            rep.append("%s"%i)
-        return "%s"%rep
+            rep+=" %s "%i
+        return rep
     def __repr__(self):
-        rep=[]
-        if len(self.cnf) == 0:
-            for i in self.rules:
-                rep.append("%s"%i)
-            return "%s"%rep
-        else:
-            for i in self.cnf:
-                rep.append("%s"%i)
-            return "%s"%rep
+        rep=""
+        for i in self.cnf:
+            rep.append("{%s}\n"%i)
+        return "%s"%rep
         
 class Rule(object):
     """ a rule in a grammar has a left hand side of 1 token and a right hand side of a """
@@ -153,17 +151,21 @@ class Rule(object):
     def __str__(self):
         right = ""
         for token in self.rightHand:
-                right+=" %s "%token.value
-        representation="{ %s ::= %s }"%(self.leftHand.value,right)
+            right+=" %s "%token.value
+        representation=" %s ::= %s "%(self.leftHand.value,right)
         return representation
     def __hash__(self):
         return hash("%s"%self)
+        
  
-def test(filename="g1.txt"):
+def test(filename=None):
+   if filename==None:
+    filename="g1.txt"
    try:
     source=open(filename,'r')
    except IOError:
     print "metabnf not found"
+    #raise IOError(filename)
    bnf=Grammar()
    bnf.generate(source,True)
    print "oldgrammar",
