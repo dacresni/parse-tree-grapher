@@ -5,7 +5,7 @@ class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
         self.rules=[]
-        self.cnf = set()
+        self.cnf = set(self.rules   )
         #self.startSymbole
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
@@ -95,6 +95,7 @@ class Grammar(object):
         for rule in self.rules:
             self.__binaryize(rule)
         self.cnf=set(self.rules)
+        self.rules=list(self.cnf)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
@@ -127,7 +128,7 @@ class Grammar(object):
         pass
     def __str__(self):
         rep=[]
-        for i in self.rules:
+        for i in self.cnf:
             rep.append("%s"%i)
         return "%s"%rep
     def __repr__(self):
