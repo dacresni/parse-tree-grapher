@@ -72,9 +72,8 @@ class CYKChart(object):
            rep+="\n"
         return rep
 
-
-
 def test(string='balance.txt', spec='g1.txt'):
+    from balance import BalanceLexer
     G = Grammar()
     source = open(spec,'r')
     #source = open("metabnf",'r')
@@ -96,5 +95,5 @@ if __name__ == '__main__' :
     if len(sys.argv)>1:
         test(sys.argv[1], sys.argv[2])
     else:
-        print "usage: %s file specfile"%sys.argv[0]
+        test()
 
