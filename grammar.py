@@ -5,8 +5,7 @@ class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
         self.rules=[]
-        #self.cnf = set(self.rules  )
-        self.cnf = set()
+        #self.rules = set(self.rules  )
         #self.startSymbole
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
@@ -47,7 +46,7 @@ class Grammar(object):
     def singleMatch(self, lex):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         matches = set()
-        for rule in self.cnf:
+        for rule in self.rules:
            #print "short test",rule.rightHand,lex
            if rule.rightHand == [lex]:
                #print "return %s -> %s"%(rule.leftHand, lex)
@@ -56,15 +55,15 @@ class Grammar(object):
 
     def longMatch(self, lex1 ,lex2):
         matches = set()
-        for rule in self.cnf:
-            #print "long test",rule.rightHand, lex1, lex2
+        for rule in self.rules:
+            print "long test",rule.rightHand, lex1, lex2
             if rule.rightHand == [lex1,lex2]:
                 #print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
                 matches.add(rule.leftHand)
         return matches 
     def shortMatch(self, set1):
         matches=set()
-        for rule in self.cnf:
+        for rule in self.rules:
            #print "short test",rule.rightHand, set1
            if rule.rightHand == [set1]:
                print "return %s -> %s"%(rule.leftHand, set1)
@@ -89,14 +88,15 @@ class Grammar(object):
                     matches.update(self.longMatch(item1,item2))# ordanance does matter
         return matches
     def __len__(self):
-            return len(self.cnf)
+            return len(self.rules)
     def bnf2cnf(self):
         for rule in self.rules:
             self.__isolateTerminals(rule)
+        print self
         for rule in self.rules:
             self.__binaryize(rule)
-        self.cnf=set(self.rules)
-        self.rules=self.cnf
+        print self
+        self.rules=set(self.rules)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
@@ -117,8 +117,7 @@ class Grammar(object):
             #we can do this recursively
             newToks=[]
             handLength=len(rule.rightHand)
-            for t in range(handLength):
-                i=rule.rightHand[t]
+            for i in rule.rightHand :
                 newToks.append(Token("nonterminal","W_%s"%i.value) )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
@@ -131,12 +130,12 @@ class Grammar(object):
         pass
     def __str__(self):
         rep=""
-        for i in self.cnf:
+        for i in self.rules:
             rep+=" %s "%i
         return rep
     def __repr__(self):
         rep=""
-        for i in self.cnf:
+        for i in self.rules:
             rep.append("{%s}\n"%i)
         return "%s"%rep
         
