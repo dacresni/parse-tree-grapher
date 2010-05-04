@@ -15,7 +15,8 @@ def genTree(C,start):
 class genDot(object):
     def genTree(self,C,start):
         mapping={ }
-
+        if not C.graph.has_key(start):
+            raise Exception("parse error")
         mapping.setdefault(start,[]).extend(C.graph[start])
         for key in C.graph[start]:
             if not C.graph.has_key(key):

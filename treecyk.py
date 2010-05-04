@@ -16,7 +16,6 @@ class CYKChart(object):
         self.size=n
         self.string=aString
         self.chart= [ [set() for _ in range(n)] for _ in range(n)]
-        #self.graph= [ [[] for _ in range(n)] for _ in range(n)] #lists are mutable
         print "in Build_CYK_Chart"
         print "aString",aString
         print "aGrammar",aGrammar
