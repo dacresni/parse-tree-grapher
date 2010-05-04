@@ -29,10 +29,10 @@ class CYKChart(object):
             for h in range(1,n-w+1):  # step 4 in pg 140 of Hopcroft and range is (first, last-1)
                 print h,w,k,"h"
                 for k in range(1,w-1+1):
-                   print h,w,k,"k"
-                   print h,w,":=",
-                   print "[%i,%i]%s"%(h,k,self.chart[h][w]),
-                   print "[%i,%i]%s"%(h+k,w-k,self.chart[h+k][w-k])
+                  # print h,w,k,"k"
+                  # print h,w,":=",
+                   #print "[%i,%i]%s"%(h,k,self.chart[h][w]),
+                   #print "[%i,%i]%s"%(h+k,w-k,self.chart[h+k][w-k])
                    set1=self.chart[h][k]
                    set2=self.chart[h+k][w-k]
                    #matches=aGrammar.setMatchLong(self.chart[h][k],self.chart[h+k][w-k])

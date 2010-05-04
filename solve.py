@@ -3,6 +3,7 @@ from treecyk import CYKChart
 from balance import BalanceLexer
 from viz import genDot
 def solve():
+    from os import system
     G = Grammar()
     source = open("g1.txt",'r')
     #source = open("metabnf",'r')
@@ -20,6 +21,8 @@ def solve():
     print C
     print C.graph
     genDot(C,"testfile.dot")
+    system("dot -Tjpg testfile.dot -o solv.jpg")
+    print "solv.jpg created"
 
 if __name__ == '__main__':
     solve()
