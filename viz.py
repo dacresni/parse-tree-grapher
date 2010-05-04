@@ -1,25 +1,12 @@
 from treecyk import CYKChart
-"""
-def genTree(C,start):
-    mapping={ }
-    for key in C.graph[start]:
-        mapping.setdefault(key,[]).extend(C.graph[key])
-        for i in C.graph[key]:
-            if C.graph.has_key(i):
-                genTree(C,i)
-            else:
-                mapping.setdefault(i,[]).append(C.string[i[1]])  #not so sure, if wrong try i[0]
-    return mapping 
-"""
-
 class genDot(object):
     def genTree(self,C,start):
         mapping={ }
-
+        if not C.graph.has_key(start) :
+            raise Exception("parse error")
         mapping.setdefault(start,[]).extend(C.graph[start])
         for key in C.graph[start]:
             if not C.graph.has_key(key):
-                #mapping.setdefault(i,[]).append(C.string[i[1]])  #not so sure, if wrong try i[0]
                 pass
             else:
                 mapping.setdefault(key,[]).extend(C.graph[key])

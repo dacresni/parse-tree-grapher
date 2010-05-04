@@ -64,7 +64,7 @@ class Grammar(object):
     def shortMatch(self, set1):
         matches=set()
         for rule in self.rules:
-           #print "short test",rule.rightHand, set1
+           print "short test",rule.rightHand, set1
            if rule.rightHand == [set1]:
                print "return %s -> %s"%(rule.leftHand, set1)
                matches.add(rule.leftHand)
@@ -78,14 +78,9 @@ class Grammar(object):
         return matches
     def setMatchLong(self, set1, set2):
         matches=set()
-        if len(set1)==0:
-            return self.setMatchShort(set2) 
-        elif len(set2 )==0:
-            return self.setMatchShort(set1)
-        else:
-            for item1 in set1:
-                for item2 in set2:
-                    matches.update(self.longMatch(item1,item2))# ordanance does matter
+        for item1 in set1:
+            for item2 in set2:
+                matches.update(self.longMatch(item1,item2))# ordanance does matter
         return matches
     def __len__(self):
             return len(self.rules)
@@ -93,8 +88,8 @@ class Grammar(object):
         for rule in self.rules:
             self.__isolateTerminals(rule)
         print self
-        for rule in self.rules:
-            self.__binaryize(rule)
+        for i in range(len(self.rules)) :
+            self.__binaryize(self.rules[i],i )
         print self
         self.rules=set(self.rules)
 
@@ -110,19 +105,22 @@ class Grammar(object):
                     self.rules.append(Rule(left,right) )
 
 
-    def __binaryize(self,rule):        
+    def __binaryize(self,rule,index):        
         #step 2 make binary
         if len(rule.rightHand)> 2 :
             #make auxiliary rules 
-            #we can do this recursively
             newToks=[]
-            handLength=len(rule.rightHand)
-            for i in rule.rightHand :
-                newToks.append(Token("nonterminal","W_%s"%i.value) )
+            hand=len(rule.rightHand)
+            for i in range(1,hand-1):
+                newToks.append(Token("nonterminal","aux%i-%i"%(index,i) ))
+            newToks.append(rule.rightHand[-1] )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
-            for i in range(1,handLength-1):
-                self.rules.append(Rule(newToks[i-1],[ newToks[i], oldRight[i] ]) )#beautifull 
+            for i in range(1,hand-1):
+                self.rules.append(Rule(newToks[i-1],[oldRight[i],newToks[i]]))
+
+
+
     def __removeEpsilon(self, rule):
         pass
     def __uniProductionsEleminate(self, rule):
@@ -131,7 +129,7 @@ class Grammar(object):
     def __str__(self):
         rep=""
         for i in self.rules:
-            rep+=" %s "%i
+            rep+=(" %s "%i)
         return rep
     def __repr__(self):
         rep=""
@@ -155,6 +153,8 @@ class Rule(object):
         return representation
     def __hash__(self):
         return hash("%s"%self)
+    def __eq__(self, other ):
+        return (self.leftHand == other.leftHand and self.rightHand ==other.rightHand)
         
  
 def test(filename=None):
