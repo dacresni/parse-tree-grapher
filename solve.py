@@ -1,7 +1,7 @@
 from grammar import Grammar
 from treecyk import CYKChart
 from balance import BalanceLexer
-from gra import genDot
+from viz import genDot
 def solve():
     from os import system
     G = Grammar()
