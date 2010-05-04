@@ -1,7 +1,7 @@
 from grammar import Grammar
 from treecyk import CYKChart
 from balance import BalanceLexer
-from viz import genDot
+from gra import genDot
 def solve():
     from os import system
     G = Grammar()
@@ -21,8 +21,8 @@ def solve():
     print C
     print C.graph
     genDot(C,"testfile.dot")
-    system("dot -Tjpg testfile.dot -o output.jpg")
-    print "output.jpg created"
+    system("dot -Tjpg testfile.dot -o test2.jpg")
+    print "test2.jpg created"
 
 if __name__ == '__main__':
     solve()
