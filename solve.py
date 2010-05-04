@@ -21,8 +21,8 @@ def solve():
     print C
     print C.graph
     genDot(C,"testfile.dot")
-    system("dot -Tjpg testfile.dot -o test2.jpg")
-    print "test2.jpg created"
+    system("dot -Tjpg testfile.dot -o solv.jpg")
+    print "solv.jpg created"
 
 if __name__ == '__main__':
     solve()
