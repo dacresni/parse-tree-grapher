@@ -5,8 +5,7 @@ class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
     def __init__(self ):
         self.rules=[]
-        #self.cnf = set(self.rules  )
-        self.cnf = set()
+        #self.rules = set(self.rules  )
         #self.startSymbole
         #we need to put the start symbole someware
     def generate(self, source, verbose=False):
@@ -47,7 +46,7 @@ class Grammar(object):
     def singleMatch(self, lex):
         """ matches a list of terminals or nonterminal to a nonterminal"""
         matches = set()
-        for rule in self.cnf:
+        for rule in self.rules:
            #print "short test",rule.rightHand,lex
            if rule.rightHand == [lex]:
                #print "return %s -> %s"%(rule.leftHand, lex)
@@ -56,16 +55,16 @@ class Grammar(object):
 
     def longMatch(self, lex1 ,lex2):
         matches = set()
-        for rule in self.cnf:
-            #print "long test",rule.rightHand, lex1, lex2
+        for rule in self.rules:
+            print "long test",rule.rightHand, lex1, lex2
             if rule.rightHand == [lex1,lex2]:
                 #print "return %s -> %s %s"%(rule.leftHand, lex1,lex2)
                 matches.add(rule.leftHand)
         return matches 
     def shortMatch(self, set1):
         matches=set()
-        for rule in self.cnf:
-           #print "short test",rule.rightHand, set1
+        for rule in self.rules:
+           print "short test",rule.rightHand, set1
            if rule.rightHand == [set1]:
                print "return %s -> %s"%(rule.leftHand, set1)
                matches.add(rule.leftHand)
@@ -79,24 +78,20 @@ class Grammar(object):
         return matches
     def setMatchLong(self, set1, set2):
         matches=set()
-        if len(set1)==0:
-            return self.setMatchShort(set2) 
-        elif len(set2 )==0:
-            return self.setMatchShort(set1)
-        else:
-            for item1 in set1:
-                for item2 in set2:
-                    matches.update(self.longMatch(item1,item2))# ordanance does matter
+        for item1 in set1:
+            for item2 in set2:
+                matches.update(self.longMatch(item1,item2))# ordanance does matter
         return matches
     def __len__(self):
-            return len(self.cnf)
+            return len(self.rules)
     def bnf2cnf(self):
         for rule in self.rules:
             self.__isolateTerminals(rule)
-        for rule in self.rules:
-            self.__binaryize(rule)
-        self.cnf=set(self.rules)
-        self.rules=self.cnf
+        print self
+        for i in range(len(self.rules)) :
+            self.__binaryize(self.rules[i],i )
+        print self
+        self.rules=set(self.rules)
 
     def __isolateTerminals(self,rule): 
         #step 1 isolate termina0ls
@@ -110,20 +105,22 @@ class Grammar(object):
                     self.rules.append(Rule(left,right) )
 
 
-    def __binaryize(self,rule):        
+    def __binaryize(self,rule,index):        
         #step 2 make binary
         if len(rule.rightHand)> 2 :
             #make auxiliary rules 
-            #we can do this recursively
             newToks=[]
-            handLength=len(rule.rightHand)
-            for t in range(handLength):
-                i=rule.rightHand[t]
-                newToks.append(Token("nonterminal","W_%s"%i.value) )
+            hand=len(rule.rightHand)
+            for i in range(1,hand-1):
+                newToks.append(Token("nonterminal","aux%i-%i"%(index,i) ))
+            newToks.append(rule.rightHand[-1] )
             oldRight=rule.rightHand
             rule.rightHand = [oldRight[0],newToks[0]]
-            for i in range(1,handLength-1):
-                self.rules.append(Rule(newToks[i-1],[ newToks[i], oldRight[i] ]) )#beautifull 
+            for i in range(1,hand-1):
+                self.rules.append(Rule(newToks[i-1],[oldRight[i],newToks[i]]))
+
+
+
     def __removeEpsilon(self, rule):
         pass
     def __uniProductionsEleminate(self, rule):
@@ -131,12 +128,12 @@ class Grammar(object):
         pass
     def __str__(self):
         rep=""
-        for i in self.cnf:
-            rep+=" %s "%i
+        for i in self.rules:
+            rep+=(" %s "%i)
         return rep
     def __repr__(self):
         rep=""
-        for i in self.cnf:
+        for i in self.rules:
             rep.append("{%s}\n"%i)
         return "%s"%rep
         
@@ -156,6 +153,8 @@ class Rule(object):
         return representation
     def __hash__(self):
         return hash("%s"%self)
+    def __eq__(self, other ):
+        return (self.leftHand == other.leftHand and self.rightHand ==other.rightHand)
         
  
 def test(filename=None):
