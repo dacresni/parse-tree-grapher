@@ -1,5 +1,5 @@
 from grammar import Grammar
-from treecyk import CYKChart
+from cyk import CYKChart
 from balance import BalanceLexer
 from viz import genDot
 def solve():
