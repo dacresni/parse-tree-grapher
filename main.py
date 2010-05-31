@@ -2,7 +2,8 @@ from grammar import Grammar
 from cyk import CYKChart
 from viz import genDot
 from os import system
-def main(lexarname, gramarspec, inputfile, outputfile=None):
+def main(args**):
+    lexarname, gramarspec, inputfile, outputfile=None
     if outputfile == None:
         outputfile = inputfile
     G = Grammar()
@@ -10,7 +11,8 @@ def main(lexarname, gramarspec, inputfile, outputfile=None):
     G.generate(source)
     G.bnf2cnf()
     print "grammer==",G
-    lexer=__import__(lexarname)
+    lexerclass=__import__(lexarname)
+    lexer=lexerclass.Lexer()
     lexer.scan(inputfile)
     S=lexer.getStream()
     print "stream ===",S
@@ -19,9 +21,10 @@ def main(lexarname, gramarspec, inputfile, outputfile=None):
     print C
     print C.graph
     genDot(C,outputfile)
-    system("dot -Tjpg %s  -o %s  "%(outputfile, outputfile))
+    system("dot -Tjpg %s  -o %s "%(outputfile, outputfile))
     print "%s ted"%(outputfile)
 
 if __name__ == '__main__':
     import sys
     main(sys.argv)
+    
