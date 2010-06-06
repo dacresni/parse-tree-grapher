@@ -2,7 +2,7 @@
 import sys
 from lexar import Token
 from grammar import Grammar
-from bnflexar import BnfLexar
+from bnflexar import Lexer
 
 class CYKChart(object):
     def __init__(self):

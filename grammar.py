@@ -1,5 +1,5 @@
 from lexar import Token 
-from bnflexar import BnfLexar
+from bnflexar import Lexer
 
 class Grammar(object):
     """grammar is simply a list of rules with at least one start symbole"""
@@ -21,7 +21,7 @@ class Grammar(object):
                 newrule.rightHand=stack[i:]
                 self.rules.append(newrule)
 
-        lex=BnfLexar()
+        lex=Lexer()
         if verbose:
             lex.setVerbose()
         lex.scanFile(source)

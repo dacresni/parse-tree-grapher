@@ -1,7 +1,7 @@
 from lexar import Token, Scanner 
 # we can impliment the grammar parser inside the scanner lexer
 # 3 out of 4 methods are going to be overloaded by the child  does the nested class inheret?
-class BnfLexar(Scanner): #should I subclass this or not
+class Lexer(Scanner): #should I subclass this or not
     def rule(self,match):
         result=match.string.strip('\n',)    
         self.tokenStream.append(Token("nonterminal",result) )

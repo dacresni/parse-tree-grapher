@@ -1,5 +1,6 @@
-from treecyk import CYKChart
+from cyk import CYKChart
 class genDot(object):
+
     def genTree(self,G,here,visited):
         neighbors=G
         if not here in visited:
