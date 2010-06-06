@@ -30,6 +30,10 @@ class Scanner(object):
 #we'll turn this into paralell lists.
         #this could be done with map()
         for k in spec.iterkeys():
+            try:
+                a = re.compile(k)
+            except sre_constants.error:
+                raise Exception("invalid regular expression, %s"%k)
             self.patterns.append(re.compile(k))
             self.actions.append(spec[k])
     def __getitem__(self,other):
