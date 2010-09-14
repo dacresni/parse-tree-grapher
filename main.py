@@ -1,3 +1,4 @@
+#! /usr/bin/env
 from grammar import Grammar
 from cyk import CYKChart
 from viz import genDot
