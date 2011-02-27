@@ -20,12 +20,12 @@ if __name__=='__main__':
     try:
         source= open('g1.txt','r')
     except IOError:
-        print 'g1 not found'
+        print('g1 not found')
     try:
         balance= open('balance.txt','r')
     except IOError:
-        print 'balance not found'
+        print('balance not found')
     readscann.scanFile(balance)
-    print "end of verbose"
-    print readscann.tokenStream
-    print "BnfLexar importedsucessfully"
+    print("end of verbose")
+    print(readscann.tokenStream)
+    print("BnfLexar importedsucessfully")

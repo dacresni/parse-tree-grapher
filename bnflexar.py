@@ -31,13 +31,13 @@ if __name__=='__main__' :
     from bnflexar import BnfLexar
     instance =BnfLexar() #don't forget the end perentheces
 # note, it won't import this grammar correctly
-    print string
+    print(string)
     instance.setVerbose()
-    print "end of verbose"
+    print("end of verbose")
     try:
         meta = open('g1.txt','r')
         instance.scanFile('g1.txt')
     except IOError:
-        print 'file not found'
-    print instance.tokenStream
-    print "BnfLexar imported sucessfully"
+        print('file not found')
+    print(instance.tokenStream)
+    print("BnfLexar imported sucessfully")

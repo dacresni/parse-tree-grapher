@@ -29,7 +29,7 @@ class Scanner(object):
         self.tokenStream = []
 #we'll turn this into paralell lists.
         #this could be done with map()
-        for k in spec.iterkeys():
+        for k in spec.keys():
             try:
                 a = re.compile(k)
             except sre_constants.error:
@@ -43,7 +43,7 @@ class Scanner(object):
             if (match):
                 self.actions[i](match)
                 if self.verbose:
-                    print "matched %s with %s"%(match.string,self.patterns[i].pattern )
+                    print(("matched %s with %s"%(match.string,self.patterns[i].pattern )))
                     #we could turn this into a decorator later
                 #actions should be callable (impliment __call__()
                 #and expect a match object as a parameter
@@ -87,10 +87,10 @@ def test():
        source =open('g1.txt')
        lex.scanFile(source)
        stream =lex.tokenStream
-       print "stream==%s"%stream
+       print("stream==%s"%stream)
        token = Token("token","value")
-       print token
-       print repr(token)
-       print "token created sucessfully"
+       print(token)
+       print(repr(token))
+       print("token created sucessfully")
 if __name__ == '__main__':
     test() 

@@ -66,7 +66,7 @@ class Grammar(object):
         for rule in self.rules:
            #print "short test",rule.rightHand, set1
            if rule.rightHand == [set1]:
-               print "return %s -> %s"%(rule.leftHand, set1)
+               print("return %s -> %s"%(rule.leftHand, set1))
                matches.add(rule.leftHand)
         return matches
 
@@ -87,10 +87,10 @@ class Grammar(object):
     def bnf2cnf(self):
         for rule in self.rules:
             self.__isolateTerminals(rule)
-        print self
+        print(self)
         for i in range(len(self.rules)) :
             self.__binaryize(self.rules[i],i )
-        print self
+        print(self)
         self.rules=set(self.rules)
 
     def __isolateTerminals(self,rule): 
@@ -163,21 +163,21 @@ def test(filename=None):
    try:
     source=open(filename,'r')
    except IOError:
-    print "metabnf not found"
+    print("metabnf not found")
     #raise IOError(filename)
    bnf=Grammar()
    bnf.generate(source,True)
-   print "oldgrammar",
-   print bnf
+   print("oldgrammar", end=' ')
+   print(bnf)
    bnf.bnf2cnf()
-   print "product"
-   print bnf
+   print("product")
+   print(bnf)
 
 
 if __name__=='__main__':
     import sys
     if len(sys.argv)>1:
-        print "calling with",sys.argv[1]
+        print("calling with",sys.argv[1])
         test(sys.argv[1])
     else:
         test()
