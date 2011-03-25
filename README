@@ -1,0 +1,2 @@
+A program to display the parse tree of arbitrary grammars 
+Simply provide the grammar spec in BNF form, the lexer in a manner one would write a lex file, and get a dot file that displays the parse tree.
