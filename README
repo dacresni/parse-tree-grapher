@@ -1,2 +1,2 @@
-A program to display the parse tree of arbitrary grammars 
-Simply provide the grammar spec in BNF form, the lexer in a manner one would write a lex file, and get a dot file that displays the parse tree.
+Parse Tree Grapher is a program to display the parse tree of arbitrary grammars 
+Simply provide the grammar spec in BNF form, a lexer by extending the Lexer class in a manner one would write a lex file, and then give Main.py some text to parse to get a dot file to be given to graphviz (input dot -Tjpg)  to display the parse tree. 
