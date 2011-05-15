@@ -1,5 +1,5 @@
 from lexar import Scanner, Token
-class BalanceLexer(Scanner):
+class Balance(Scanner):
     def leftPerens(self,match):
         result=match.string.strip("\n")    
         self.tokenStream.append(Token("terminal",result))

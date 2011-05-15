@@ -1,5 +1,5 @@
 from lexar import Scanner, Token
-class Telescope(Scanner):
+class Cky(Scanner):
     def __init__(self):
         specDict={
         r'(I|the|man|telescope|with|saw|cat|dog|pig|hill|park|roof|from|on|in)':self.terminal

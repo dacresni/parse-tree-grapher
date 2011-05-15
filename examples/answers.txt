@@ -1,4 +1,4 @@
-g1.txt
+balance.txt
 <S> ::= <F> <R>
 <F> ::= <L> <S>
 <S> ::= <S> <S>
