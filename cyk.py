@@ -75,13 +75,11 @@ def test(string='balance.txt', spec='g1.txt'):
     from balance import BalanceLexer
     G = Grammar()
     source = open(spec,'r')
-    #source = open("metabnf",'r')
     G.generate(source)
     G.bnf2cnf()
     print "grammer==",G
     lexer= BalanceLexer()
     balance=open(string,'r')
-#    balance=open('metabnf','r')
     lexer.scanFile(balance)
     S=lexer.getStream()
     print "stream ===",S
