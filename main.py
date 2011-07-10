@@ -3,9 +3,20 @@ from grammar import Grammar
 from cyk import CYKChart
 from viz import genDot
 from os import system
-def main(args**):
+def main(args):
     lexarname, gramarspec, inputfile, outputfile=None
-    if outputfile == None:
+    argc= len(args)
+    if argc == 1: 
+        print "usage: main.py  lexarname, gramarspec, inputfile, [outputfile ]\n"
+    if argc > 1 : 
+        lexarname = args[1]
+    if arg > 2 : 
+        gramarspec = args[2]
+    if arg > 3 : 
+        inputfile = args[3]
+    if outputfile > 4 :
+        outputfile = args[4]
+    else:
         outputfile = inputfile
     G = Grammar()
     source = open(gramarspec,'r')
