@@ -25,7 +25,8 @@ class genDot(object):
         self.genTree(C.graph, (1,len(C)-1),self.visited )
         for node in self.visited :
             lable=C.chart[node[0]][node[1]]
-            self.specFile+='    "%s"[label = "%s"] ;\n'%(node,list(lable )) #find lable for leaf node 
+            self.specFile+='    "%s"[label = "%s"] ;\n'%(node,list(lable )) 
+            #find lable for leaf node 
             
         finalFile=open(self.filename,'w')
         finalFile.write("digraph G { \n")
@@ -34,16 +35,31 @@ class genDot(object):
         
     def genJS(self, C, filename=None):
        """conditional asignment"""
-       self.filename = "testfile.js" if filename=="None" else filename
+       self.filename = "testfile.js" if !filename else filename
        self.specFile=""
        self.edges=[]
        self.visited=set()
        if (1,len(C)-1) not in C.graph.keys():
             raise Exception("parse error")
-        self.genTree(G.graph, (1,len(C)-1),self.visited)
+        self.genJSTree(G.graph, (1,len(C)-1),self.visited)
         for node in self.visited :
             lable=C.chart[node[0]][node[1]]
-            self.specFile+='    "g.addNode(%s", {label:"%s"} );\n'%(node,list(lable )) #find lable for leaf node 
+            self.specFile+='    "g.addNode(%s", {label:"%s"} );\n'%(node,list(lable )) 
+            #find lable for leaf node 
+        finalFile=open(self.filename,'w')
+        finalFile.write("var g = new Graph();  \n")
+        finalFile.write(self.specFile)
+        ending = 
+        """
+        var layouter = new Graph.Layout.Spring(g);
+        layouter.layout();
+
+        var renderer = new Graph.Renderer.Raphael('canvas',g,400,300);
+        renderer.draw();
+        """
+        finalFile.write(ending)
+
+
 
     def genJSTree(self,G,here,visited):
         neighbors=G
@@ -53,5 +69,5 @@ class genDot(object):
                 for next in neighbors[here]:
                     self.edges.append((here,next))
                     self.specFile+='g.addEdge("%s","%s");\n'%((here,next ))
-                    self.genTree(G,next,visited)
+                    self.genJSTree(G,next,visited)
 
