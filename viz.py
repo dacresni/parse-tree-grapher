@@ -16,6 +16,9 @@ class genDot(object):
             self.filename="testfile.dot"
         else:
             self.filename=filename
+        self.genDot(C,sellf.)
+
+    def genDot(self, C):
         self.specFile=""
         self.edges=[]
         self.visited = set()
@@ -27,15 +30,12 @@ class genDot(object):
             lable=C.chart[node[0]][node[1]]
             self.specFile+='    "%s"[label = "%s"] ;\n'%(node,list(lable )) 
             #find lable for leaf node 
-            
         finalFile=open(self.filename,'w')
         finalFile.write("digraph G { \n")
         finalFile.write(self.specFile)
         finalFile.write("}")
         
-    def genJS(self, C, filename=None):
-       """conditional asignment"""
-       self.filename = "testfile.js" if !filename else filename
+    def genJS(self, C):
        self.specFile=""
        self.edges=[]
        self.visited=set()
