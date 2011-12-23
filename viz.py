@@ -1,5 +1,10 @@
 from cyk import CYKChart
-class genDot(object):
+class genVIZ(object):
+    def __init__(self,C,filename=None):
+        if filename==None:
+            self.filename="testfile.dot"
+        else:
+            self.filename=filename
 
     def genTree(self,G,here,visited):
         neighbors=G
@@ -10,13 +15,6 @@ class genDot(object):
                     self.edges.append((here,next))
                     self.specFile+='  "%s" -> "%s" ;\n'%((here,next ))
                     self.genTree(G,next,visited)
-    #if your not connected, you wont be in the bfs        
-    def __init__(self,C,filename=None):
-        if filename==None:
-            self.filename="testfile.dot"
-        else:
-            self.filename=filename
-        self.genDot(C,sellf.)
 
     def genDot(self, C):
         self.specFile=""
@@ -41,7 +39,7 @@ class genDot(object):
        self.visited=set()
        if (1,len(C)-1) not in C.graph.keys():
             raise Exception("parse error")
-        self.genJSTree(G.graph, (1,len(C)-1),self.visited)
+        self.genJSTree(C.graph, (1,len(C)-1),self.visited)
         for node in self.visited :
             lable=C.chart[node[0]][node[1]]
             self.specFile+='    "g.addNode(%s", {label:"%s"} );\n'%(node,list(lable )) 
@@ -58,8 +56,6 @@ class genDot(object):
         renderer.draw();
         """
         finalFile.write(ending)
-
-
 
     def genJSTree(self,G,here,visited):
         neighbors=G

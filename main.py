@@ -4,10 +4,10 @@ from cyk import CYKChart
 from viz import genDot
 from os import system
 def main(args):
-    lexarname, gramarspec, inputfile, outputfile=None
+    lexarname, gramarspec, inputfile, outputtype, outputfile=None
     argc= len(args)
     if argc == 1: 
-        print "usage: main.py  lexarname, gramarspec, inputfile, [outputfile ]\n"
+        print "usage: main.py  lexarname, gramarspec, inputfile,[output-type] [output-file ]\n"
     if argc > 1 : 
         lexarname = args[1]
     if arg > 2 : 
@@ -15,8 +15,14 @@ def main(args):
     if arg > 3 : 
         inputfile = args[3]
     if outputfile > 4 :
-        outputfile = args[4]
+        outputtype=args[4]
     else:
+        outputtype="dot"
+
+    if outputtype > 5 :
+        outputfile = args[5]
+    else:
+
         outputfile = inputfile
     G = Grammar()
     source = open(gramarspec,'r')
@@ -32,9 +38,12 @@ def main(args):
     C.Build_CYK_Chart(G,S)
     print C
     print C.graph
-    genDot(C,outputfile)
-    system("dot -Tjpg %s  -o %s "%(outputfile, outputfile))
-    print "%s ted"%(outputfile)
+    if outputtype="dot"
+        genDot(C,outputfile)
+        system("dot -Tjpg %s  -o %s "%(outputfile, outputfile))
+        print "%s generated"%(outputfile)
+    elif outputtype="js":
+       genVIZ(C,outputfile)
 
 if __name__ == '__main__':
     import sys
