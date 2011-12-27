@@ -32,6 +32,8 @@ class Scanner(object):
         for k in spec.iterkeys():
             try:
                 a = re.compile(k)
+                # http://stackoverflow.com/questions/101268/hidden-features-of-python#143636 
+                # apperently re has a debug flag
             except sre_constants.error:
                 raise Exception("invalid regular expression, %s"%k)
             self.patterns.append(re.compile(k))
