@@ -34,20 +34,20 @@ class genVIZ(object):
         finalFile.write("}")
         
     def genJS(self, C):
-       self.specFile=""
-       self.edges=[]
-       self.visited=set()
-       if (1,len(C)-1) not in C.graph.keys():
+        self.specFile=""
+        self.edges=[]
+        self.visited=set()
+        if (1,len(C)-1) not in C.graph.keys():
             raise Exception("parse error")
         self.genJSTree(C.graph, (1,len(C)-1),self.visited)
         for node in self.visited :
             lable=C.chart[node[0]][node[1]]
             self.specFile+='    "g.addNode(%s", {label:"%s"} );\n'%(node,list(lable )) 
-            #find lable for leaf node 
+        #find lable for leaf node 
         finalFile=open(self.filename,'w')
         finalFile.write("var g = new Graph();  \n")
         finalFile.write(self.specFile)
-        ending = 
+        ending = \
         """
         var layouter = new Graph.Layout.Spring(g);
         layouter.layout();

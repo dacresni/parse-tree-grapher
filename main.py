@@ -38,11 +38,11 @@ def main(args):
     C.Build_CYK_Chart(G,S)
     print C
     print C.graph
-    if outputtype="dot"
+    if outputtype=="dot":
         genDot(C,outputfile)
-        system("dot -Tjpg %s  -o %s "%(outputfile, outputfile))
+        system("dot -Tjpg %s  -o %s "%(outputfile, outputfile)) # todo, see if dot takes STDIN so I can pipe this to it 
         print "%s generated"%(outputfile)
-    elif outputtype="js":
+    elif outputtype=="js":
        genVIZ(C,outputfile)
 
 if __name__ == '__main__':
