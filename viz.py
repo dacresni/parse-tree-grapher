@@ -45,7 +45,7 @@ class genVIZ(object):
             self.specFile+='    "g.addNode(%s", {label:"%s"} );\n'%(node,list(lable )) 
         #find lable for leaf node 
         finalFile=open(self.filename,'w')
-        finalFile.write("var g = new Graph();  \n")
+        finalFile.write("<html> <head> <script> var g = new Graph();  \n")
         finalFile.write(self.specFile)
         ending = \
         """
@@ -54,6 +54,7 @@ class genVIZ(object):
 
         var renderer = new Graph.Renderer.Raphael('canvas',g,400,300);
         renderer.draw();
+        </script> </head> <body> <canvas> </canvas> </body> </html>
         """
         finalFile.write(ending)
 

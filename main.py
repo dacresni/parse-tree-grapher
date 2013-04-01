@@ -1,34 +1,40 @@
 #! /usr/bin/env
 from grammar import Grammar
 from cyk import CYKChart
-from viz import genDot
+from viz import genVIZ 
 from os import system
+from os import sep
 def main(args):
-    lexarname, gramarspec, inputfile, outputtype, outputfile=None
+    lexarname =None
+    gramarspec =None
+    inputfile =None
+    outputtype =None
+    outputfile =None
     argc= len(args)
     if argc == 1: 
         print "usage: main.py  lexarname, gramarspec, inputfile,[output-type] [output-file ]\n"
+        return
     if argc > 1 : 
         lexarname = args[1]
-    if arg > 2 : 
+    if argc > 2 :
         gramarspec = args[2]
-    if arg > 3 : 
+    if argc > 3 : 
         inputfile = args[3]
-    if outputfile > 4 :
+    if argc > 4 :
         outputtype=args[4]
     else:
         outputtype="dot"
-
-    if outputtype > 5 :
+    if argc > 5 :
         outputfile = args[5]
     else:
-
         outputfile = inputfile
     G = Grammar()
     source = open(gramarspec,'r')
     G.generate(source)
     G.bnf2cnf()
     print "grammer==",G
+    if sep in lexarname:
+        lexarname = lexarname.replace(sep,".")
     lexerclass=__import__(lexarname)
     lexer=lexerclass.Lexer()
     lexer.scan(inputfile)
