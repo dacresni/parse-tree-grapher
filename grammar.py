@@ -158,21 +158,21 @@ class Rule(object):
         
  
 def test(filename=None):
+   source = None
    if filename==None:
-    filename="g1.txt"
+    filename="examples/balance.txt"
    try:
     source=open(filename,'r')
+    bnf=Grammar()
+    bnf.generate(source,True)
+    print "oldgrammar",
+    print bnf
+    bnf.bnf2cnf()
+    print "product"
+    print bnf
    except IOError:
     print "metabnf not found"
-    #raise IOError(filename)
-   bnf=Grammar()
-   bnf.generate(source,True)
-   print "oldgrammar",
-   print bnf
-   bnf.bnf2cnf()
-   print "product"
-   print bnf
-
+    raise IOError(filename)
 
 if __name__=='__main__':
     import sys
